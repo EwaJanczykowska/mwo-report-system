@@ -36,4 +36,11 @@ public class Company {
     public int hashCode() {
         return Objects.hash(persons);
     }
+
+    @Override
+    public String toString() {
+        return "Company{" +
+                "persons=" + persons +
+                '}';
+    }
 }
