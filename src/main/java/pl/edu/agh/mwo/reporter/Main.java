@@ -4,6 +4,7 @@ import pl.edu.agh.mwo.reporter.loader.DataLoader;
 import pl.edu.agh.mwo.reporter.model.Company;
 import pl.edu.agh.mwo.reporter.reports.Report;
 import pl.edu.agh.mwo.reporter.reports.Report1;
+import pl.edu.agh.mwo.reporter.reports.ReportTest;
 
 import java.io.IOException;
 import java.nio.file.Path;
@@ -22,6 +23,9 @@ public class Main {
 
         Report report1 = new Report1(company);
         report1.printToConsole();
+//=========================
+        ReportTest export = new ReportTest(company);
+        export.printToExcel();
     }
 
 }
