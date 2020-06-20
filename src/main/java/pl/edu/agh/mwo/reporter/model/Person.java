@@ -28,4 +28,12 @@ public class Person {
     public void addTasks(Collection<Task> tasks) {
         this.tasks.addAll(tasks);
     }
+
+    @Override
+    public String toString() {
+        return "Person{" +
+                "name='" + name + '\'' +
+                ", tasks=" + tasks +
+                '}';
+    }
 }

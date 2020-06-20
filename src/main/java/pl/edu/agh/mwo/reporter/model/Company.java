@@ -15,11 +15,18 @@ public class Company {
         return persons;
     }
 
-    void addPerson(Person person) {
+    public void addPerson(Person person) {
         this.persons.add(person);
     }
 
     void addPersons(Collection<Person> persons) {
         this.persons.addAll(persons);
+    }
+
+    @Override
+    public String toString() {
+        return "Company{" +
+                "persons=" + persons +
+                '}';
     }
 }

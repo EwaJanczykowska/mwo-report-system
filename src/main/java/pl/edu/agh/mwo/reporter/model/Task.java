@@ -30,4 +30,14 @@ public class Task {
     public String getProjectName() {
         return projectName;
     }
+
+    @Override
+    public String toString() {
+        return "Task{" +
+                "name='" + name + '\'' +
+                ", date=" + date +
+                ", hours=" + hours +
+                ", projectName='" + projectName + '\'' +
+                '}';
+    }
 }
