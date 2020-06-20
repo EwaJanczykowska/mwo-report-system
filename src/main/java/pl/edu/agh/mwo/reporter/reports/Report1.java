@@ -15,7 +15,7 @@ public class Report1 implements Report {
     }
 
     public void printToConsole() {
-        System.out.printf("%-40s %-15s\n", "Imie nazwisko", "Liczba godzin");
+        System.out.printf("%-40s %-15s\n", "Nazwisko imie", "Liczba godzin");
 
         for (Person person : company.getPersons()) {
             int hours = 0;
