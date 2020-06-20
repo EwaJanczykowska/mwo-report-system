@@ -6,16 +6,18 @@ import pl.edu.agh.mwo.reporter.model.Task;
 
 import java.util.List;
 
-public class Report1 implements ReportGenerator {
+public class Report1 implements Report {
 
-    List<Person> personList;
+    private Company company;
 
-    public void printToConsole(Company company) {
-        this.personList = company.getPersons();
+    public Report1(Company company) {
+        this.company = company;
+    }
 
+    public void printToConsole() {
         System.out.printf("%-40s %-15s\n", "Imie nazwisko", "Liczba godzin");
 
-        for (Person person : personList) {
+        for (Person person : company.getPersons()) {
             int hours = 0;
             for (Task task : person.getTasks()) {
                 hours += task.getHours();
@@ -25,7 +27,6 @@ public class Report1 implements ReportGenerator {
 
     }
 
-    public void printToExcel(Company company) {
-        this.personList = company.getPersons();
+    public void printToExcel() {
     }
 }
