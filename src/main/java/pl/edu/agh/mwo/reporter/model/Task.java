@@ -1,6 +1,7 @@
 package pl.edu.agh.mwo.reporter.model;
 
 import java.time.LocalDate;
+import java.util.Objects;
 
 public class Task {
     private final String name;
@@ -29,6 +30,22 @@ public class Task {
 
     public String getProjectName() {
         return projectName;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Task task = (Task) o;
+        return hours == task.hours &&
+                name.equals(task.name) &&
+                date.equals(task.date) &&
+                projectName.equals(task.projectName);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name, date, hours, projectName);
     }
 
     @Override

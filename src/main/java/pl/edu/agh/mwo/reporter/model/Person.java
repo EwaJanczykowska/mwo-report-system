@@ -3,6 +3,7 @@ package pl.edu.agh.mwo.reporter.model;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.Objects;
 
 public class Person {
     private final String name;
@@ -27,6 +28,20 @@ public class Person {
 
     public void addTasks(Collection<Task> tasks) {
         this.tasks.addAll(tasks);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Person person = (Person) o;
+        return name.equals(person.name) &&
+                tasks.equals(person.tasks);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name, tasks);
     }
 
     @Override
