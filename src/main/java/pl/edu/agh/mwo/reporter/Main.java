@@ -12,7 +12,7 @@ import java.util.ArrayList;
 public class Main {
 
     public static void main(String[] args) throws IOException {
-        String directory = "resources";
+        String directory = args[0];
 
         ReaderExcelFiles f= new ReaderExcelFiles();
         ArrayList<Path> allFiles = f.getAllFiles(directory);
