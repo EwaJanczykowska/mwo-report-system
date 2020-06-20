@@ -7,6 +7,7 @@ import pl.edu.agh.mwo.reporter.model.Task;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Path;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.ArrayList;
@@ -15,8 +16,8 @@ import java.util.List;
 
 public class DataLoader {
 
-    public Company loadData(String path) throws IOException {
-        File file = new File(path);
+    public Company loadData(Path path) throws IOException {
+        File file = path.toFile();
 
         Workbook workbook = WorkbookFactory.create(file);
 

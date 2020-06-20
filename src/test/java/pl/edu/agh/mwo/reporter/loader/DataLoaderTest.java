@@ -5,6 +5,7 @@ import org.junit.Test;
 import pl.edu.agh.mwo.reporter.model.Company;
 import pl.edu.agh.mwo.reporter.model.Person;
 
+import java.nio.file.Paths;
 import java.util.List;
 
 public class DataLoaderTest {
@@ -13,7 +14,7 @@ public class DataLoaderTest {
     public void read_jan_kowalski_data() throws Exception {
         DataLoader dataLoader = new DataLoader();
 
-        Company company = dataLoader.loadData("resources/2012/01/Kowalski_Jan.xls");
+        Company company = dataLoader.loadData(Paths.get("resources/2012/01/Kowalski_Jan.xls"));
 
         Assert.assertNotNull(company);
         List<Person> persons = company.getPersons();
