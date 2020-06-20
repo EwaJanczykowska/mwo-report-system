@@ -1,11 +1,19 @@
 package pl.edu.agh.mwo.reporter.reports;
 
-public class Report1 implements ReportGenerator {
-    public void printToConsole() {
+import pl.edu.agh.mwo.reporter.model.Company;
+import pl.edu.agh.mwo.reporter.model.Person;
 
+import java.util.List;
+
+public class Report1 implements ReportGenerator {
+
+    List<Person> personList;
+
+    public void printToConsole(Company company) {
+        this.personList = company.getPersons();
     }
 
-    public void printToExcel() {
-
+    public void printToExcel(Company company) {
+        this.personList = company.getPersons();
     }
 }
