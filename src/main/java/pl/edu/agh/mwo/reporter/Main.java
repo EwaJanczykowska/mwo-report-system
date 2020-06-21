@@ -12,7 +12,7 @@ import java.nio.file.Path;
 import java.util.ArrayList;
 
 public class Main {
-
+final static String OUTPU_PATH = "resources\\Reports.xlsm";
     public static void main(String[] args) throws IOException {
         String directory = args[0];
 
@@ -27,9 +27,11 @@ public class Main {
 //================= ========
 //Raport 1 - do Excela
        String[]   header = {"Nazwisko i imie", "Liczba godzin"};
+       String title ="Raport liczby godzim poswieconych na projekty w rozbiciu na pracownikow";
         ReportTest raport1 = new ReportTest(company,
-                "resources\\Reports.xlsm",
+                OUTPU_PATH,
                 "Report1",
+                title,
                 header
                 );//name of sheet);
         raport1.printToExcel();
