@@ -5,11 +5,10 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Report2 {
-    private final String description;
+    private final String description = "Raport liczby godzim poswieconych na projekty";
     private final Map<String, BigDecimal> hoursPerProject;
 
-    public Report2(String description) {
-        this.description = description;
+    public Report2() {
         this.hoursPerProject = new HashMap<>();
     }
 
