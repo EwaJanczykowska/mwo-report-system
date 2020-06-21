@@ -2,12 +2,13 @@ package pl.edu.agh.mwo.reporter.model.report;
 
 import pl.edu.agh.mwo.reporter.model.Person;
 
+import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.Map;
 
 public class Report1 {
     private final String description;
-    private final Map<Person, Integer> hoursPerPerson;
+    private final Map<Person, BigDecimal> hoursPerPerson;
 
     public Report1(String description) {
         this.description = description;
@@ -18,15 +19,15 @@ public class Report1 {
         return description;
     }
 
-    public Map<Person, Integer> getHoursPerPerson() {
+    public Map<Person, BigDecimal> getHoursPerPerson() {
         return hoursPerPerson;
     }
 
-    public Integer getHoursForPerson(Person person) {
+    public BigDecimal getHoursForPerson(Person person) {
         return this.hoursPerPerson.get(person);
     }
 
-    public void addPersonWithTotalNumberOfHours(Person person, Integer totalNumberOfHours) {
+    public void addPersonWithTotalNumberOfHours(Person person, BigDecimal totalNumberOfHours) {
         this.hoursPerPerson.put(person, totalNumberOfHours);
     }
 }
