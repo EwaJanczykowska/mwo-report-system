@@ -1,15 +1,16 @@
 package pl.edu.agh.mwo.reporter.model;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.Objects;
 
 public class Task {
     private final String name;
     private final LocalDate date;
-    private final int hours;
+    private final BigDecimal hours;
     private final String projectName;
 
-    public Task(String name, LocalDate date, int hours, String projectName) {
+    public Task(String name, LocalDate date, BigDecimal hours, String projectName) {
         this.name = name;
         this.date = date;
         this.hours = hours;
@@ -24,7 +25,7 @@ public class Task {
         return date;
     }
 
-    public int getHours() {
+    public BigDecimal getHours() {
         return hours;
     }
 
@@ -37,10 +38,10 @@ public class Task {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Task task = (Task) o;
-        return hours == task.hours &&
-                name.equals(task.name) &&
-                date.equals(task.date) &&
-                projectName.equals(task.projectName);
+        return Objects.equals(name, task.name) &&
+                Objects.equals(date, task.date) &&
+                Objects.equals(hours, task.hours) &&
+                Objects.equals(projectName, task.projectName);
     }
 
     @Override

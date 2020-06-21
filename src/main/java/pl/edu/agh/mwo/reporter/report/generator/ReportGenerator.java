@@ -6,6 +6,8 @@ import pl.edu.agh.mwo.reporter.model.Task;
 import pl.edu.agh.mwo.reporter.model.report.Report1;
 import pl.edu.agh.mwo.reporter.model.report.Report2;
 
+import java.math.BigDecimal;
+
 public class ReportGenerator implements IReportGenerator {
 
     private final Company company;
@@ -15,11 +17,11 @@ public class ReportGenerator implements IReportGenerator {
     }
 
     public Report1 generateReport1() {
-        Report1 report1 = new Report1("report1");
+        Report1 report1 = new Report1();
         for (Person person : company.getPersons()) {
-            int hours = 0;
+            BigDecimal hours = BigDecimal.ZERO;
             for (Task task : person.getTasks()) {
-                hours += task.getHours();
+                hours = hours.add(task.getHours());
             }
             report1.addPersonWithTotalNumberOfHours(person, hours);
         }
