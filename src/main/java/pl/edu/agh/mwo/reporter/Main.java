@@ -2,9 +2,9 @@ package pl.edu.agh.mwo.reporter;
 
 import org.apache.commons.cli.*;
 import pl.edu.agh.mwo.reporter.loader.DataLoader;
+import pl.edu.agh.mwo.reporter.loader.ReaderExcelFiles;
 import pl.edu.agh.mwo.reporter.model.Company;
 import pl.edu.agh.mwo.reporter.model.report.Report1;
-import pl.edu.agh.mwo.reporter.model.report.Report2;
 import pl.edu.agh.mwo.reporter.report.generator.IReportGenerator;
 import pl.edu.agh.mwo.reporter.report.generator.ReportGenerator;
 import pl.edu.agh.mwo.reporter.report.printer.IReportPrinter;
@@ -15,6 +15,8 @@ import java.nio.file.Path;
 import java.util.ArrayList;
 
 public class Main {
+
+    final static String OUTPUT_PATH = "resources\\Reports.xlsm";
 
     public static void main(String[] args) throws IOException, ParseException {
 
@@ -30,7 +32,6 @@ public class Main {
             String directory = cmd.getOptionValue("source");
             String rType = cmd.getOptionValue("rtype");
 
-
             ReaderExcelFiles f = new ReaderExcelFiles();
             ArrayList<Path> allFiles = f.getAllFiles(directory);
 
@@ -44,6 +45,7 @@ public class Main {
                     Report1 report1 = reportGenerator.generateReport1();
                     IReportPrinter printer = new Report1Printer(report1);
                     printer.printToConsole();
+                    printer.printToExcel(OUTPUT_PATH);
                     if (cmd.hasOption("export")) {
                         // excel printer here
                     }
@@ -70,7 +72,6 @@ public class Main {
         } catch (MissingArgumentException a) {
             System.out.println("Argument for either:\n-source\n-rtype\n-datefilter\n-employeefilter\nnot found.");
         }
-
 
     }
 
