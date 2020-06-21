@@ -17,7 +17,7 @@ public class ReportGenerator implements IReportGenerator {
     }
 
     public Report1 generateReport1() {
-        Report1 report1 = new Report1("report1");
+        Report1 report1 = new Report1();
         for (Person person : company.getPersons()) {
             BigDecimal hours = BigDecimal.ZERO;
             for (Task task : person.getTasks()) {

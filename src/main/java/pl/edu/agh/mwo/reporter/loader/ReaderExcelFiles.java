@@ -1,4 +1,4 @@
-package pl.edu.agh.mwo.reporter;
+package pl.edu.agh.mwo.reporter.loader;
 
 import java.io.File;
 import java.io.FilenameFilter;
@@ -19,6 +19,10 @@ public class ReaderExcelFiles {
         } catch (IOException e) {
 
             e.printStackTrace();
+        }
+        if (filesPaths.isEmpty()) {
+        	System.out.println("BLAD: Podana sciezka nie zawiera plikow excel");
+        	System.exit(0);
         }
         return filesPaths;
     }
