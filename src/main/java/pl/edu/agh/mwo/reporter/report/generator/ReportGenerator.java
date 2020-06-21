@@ -7,6 +7,8 @@ import pl.edu.agh.mwo.reporter.model.report.Report1;
 import pl.edu.agh.mwo.reporter.model.report.Report2;
 
 import java.math.BigDecimal;
+import java.util.HashSet;
+import java.util.Set;
 
 public class ReportGenerator implements IReportGenerator {
 
@@ -29,6 +31,22 @@ public class ReportGenerator implements IReportGenerator {
     }
 
     public Report2 generateReport2() {
-        throw new IllegalStateException("not implemented yet!");
+        Report2 report2 = new Report2();
+        final Set<String> projectNames = new HashSet<>();
+        company.getPersons().forEach(person -> person.getTasks().forEach(task -> projectNames.add(task.getProjectName())));
+
+        for (String projectName : projectNames) {
+            BigDecimal hours = BigDecimal.ZERO;
+            for (Person person : company.getPersons()) {
+                for (Task task : person.getTasks()) {
+                    if (task.getProjectName().equals(projectName)) {
+                        hours = hours.add(task.getHours());
+                    }
+                }
+            }
+            report2.addProjectWithTotalNumberOfHours(projectName, hours);
+        }
+
+        return report2;
     }
 }
