@@ -5,4 +5,5 @@ public interface IReportPrinter {
     void printToConsole();
 
     void printToExcel(String excelFilePath);
+
 }
