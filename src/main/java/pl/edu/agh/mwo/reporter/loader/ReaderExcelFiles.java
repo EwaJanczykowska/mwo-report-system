@@ -20,6 +20,10 @@ public class ReaderExcelFiles {
 
             e.printStackTrace();
         }
+        if (filesPaths.isEmpty()) {
+        	System.out.println("BLAD: Podana sciezka nie zawiera plikow excel");
+        	System.exit(0);
+        }
         return filesPaths;
     }
 
