@@ -27,7 +27,7 @@ final static String OUTPU_PATH = "resources\\Reports.xlsm";
 //================= ========
 //Raport 1 - do Excela
        String[]   header = {"Nazwisko i imie", "Liczba godzin"};
-       String title ="Raport liczby godzim poswieconych na projekty w rozbiciu na pracownikow";
+       String title ="Raport liczby godzin poswieconych na projekty w rozbiciu na pracownikow";
         ReportTest raport1 = new ReportTest(company,
                 OUTPU_PATH,
                 "Report1",

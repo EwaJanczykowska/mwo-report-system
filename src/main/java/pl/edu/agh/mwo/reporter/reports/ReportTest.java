@@ -9,9 +9,7 @@ import pl.edu.agh.mwo.reporter.model.Company;
 import pl.edu.agh.mwo.reporter.model.Person;
 import pl.edu.agh.mwo.reporter.model.Task;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
+import java.io.*;
 
 
 public class ReportTest implements Report {
@@ -37,24 +35,12 @@ public class ReportTest implements Report {
 
     public void printToExcel() throws IOException {
 
-        File file = new File(filename);
+        InputStream ExcelFileToRead = new FileInputStream(filename);
 
         try {
-//            //jesli plik istnieje to
-//
-//            // XSSFWorkbook wb = new XSSFWorkbook(excelFileName);
-//            // w przeciwnym wypadku
-//            // Ensure if file exist or not
-//            if (file.isFile() && file.exists()) {
-//                System.out.println("Reports.xlsm  is open");
-//            }
-//            else {
-//                System.out.println("Reports.xlsm not exist"
-//                        + " or can't open");
-//            }
 
-            XSSFWorkbook wb = new XSSFWorkbook();
-            XSSFSheet sheet = wb.createSheet(sheetName);
+            XSSFWorkbook wb = new XSSFWorkbook(ExcelFileToRead);
+            XSSFSheet sheet = wb.getSheet(sheetName);
             // XSSFSheet sheet = wb.getSheet(sheetName);
             //title report
 
