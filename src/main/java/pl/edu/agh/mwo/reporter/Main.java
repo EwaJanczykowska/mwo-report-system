@@ -2,8 +2,11 @@ package pl.edu.agh.mwo.reporter;
 
 import pl.edu.agh.mwo.reporter.loader.DataLoader;
 import pl.edu.agh.mwo.reporter.model.Company;
-import pl.edu.agh.mwo.reporter.reports.Report;
-import pl.edu.agh.mwo.reporter.reports.Report1;
+import pl.edu.agh.mwo.reporter.model.report.Report1;
+import pl.edu.agh.mwo.reporter.report.generator.IReportGenerator;
+import pl.edu.agh.mwo.reporter.report.generator.ReportGenerator;
+import pl.edu.agh.mwo.reporter.report.printer.IReportPrinter;
+import pl.edu.agh.mwo.reporter.report.printer.Report1Printer;
 
 import java.io.IOException;
 import java.nio.file.Path;
@@ -18,11 +21,13 @@ public class Main {
         ArrayList<Path> allFiles = f.getAllFiles(directory);
 
         DataLoader dataLoader = new DataLoader();
+        Company company = dataLoader.loadData(allFiles);
 
-    	Company company = dataLoader.loadData(allFiles.get(0));        	
-    	Report report1 = new Report1(company);
-    	report1.printToConsole();
+        IReportGenerator reportGenerator = new ReportGenerator(company);
+        Report1 report = reportGenerator.generateReport1();
+        IReportPrinter printer = new Report1Printer(report);
 
+        printer.printToConsole();
     }
 
 }

@@ -16,72 +16,77 @@ import java.util.List;
 
 public class DataLoader {
 
-    public Company loadData(Path path) throws IOException {
-        File file = path.toFile();
-
-        Workbook workbook = WorkbookFactory.create(file);
-
-        String fileName = file.getName();
-        String personName = fileName.replace(".xls","").replace("_", " ");
-
-        List<Task> tasks = readPersonTasks(workbook);
-
-        Person person = new Person(personName);
-        person.addTasks(tasks);
-
+    public Company loadData(List<Path> paths) throws IOException {
         Company company = new Company();
-        company.addPerson(person);
+
+        for (Path path : paths) {
+            File file = path.toFile();
+            Workbook workbook = WorkbookFactory.create(file);
+
+            String fileName = file.getName();
+            String personName = fileName.replace(".xls", "").replace("_", " ");
+
+            List<Task> tasks = readPersonTasks(workbook);
+
+            Person person = company.getPersonByName(personName);
+            if (person == null) {
+                person = new Person(personName);
+                company.addPerson(person);
+            }
+            person.addTasks(tasks);
+        }
+
         return company;
     }
 
     private List<Task> readPersonTasks(Workbook workbook) {
         List<Task> tasks = new ArrayList<>();
 
-        for (Sheet sheet: workbook) {
+        for (Sheet sheet : workbook) {
             String projectName = sheet.getSheetName();
             boolean isError = false;
-            for (int i=1; i<sheet.getPhysicalNumberOfRows(); i++) {
+            for (int i = 1; i < sheet.getPhysicalNumberOfRows(); i++) {
                 isError = false;
-            	Row row = sheet.getRow(i);
+                Row row = sheet.getRow(i);
                 Cell dateCell = row.getCell(0);
                 Date taskDate = dateCell.getDateCellValue();
                 if (taskDate == null) {
-                	System.out.println("Pusta komorka w: "+i+", 1");
-                	isError = true;
+                    System.out.println("Pusta komorka w: " + i + ", 1");
+                    isError = true;
                 }
 
                 Cell taskCell = row.getCell(1);
                 String taskName = "";
                 if (taskCell == null) {
-                	System.out.println("Pusta komorka w: "+i+", 2");
-                	isError = true;
+                    System.out.println("Pusta komorka w: " + i + ", 2");
+                    isError = true;
                 } else {
-                	taskName = taskCell.getStringCellValue();
-                	
-                	if (taskName == "") {
-                		System.out.println("Pusta komorka w: "+i+", 2");
-                		isError = true;
-                	}
+                    taskName = taskCell.getStringCellValue();
+
+                    if (taskName == "") {
+                        System.out.println("Pusta komorka w: " + i + ", 2");
+                        isError = true;
+                    }
                 }
 
                 Cell hoursCell = row.getCell(2);
                 int taskHours = 0;
-                if (hoursCell == null ) {
-                	System.out.println("Pusta komorka w: "+i+", 3");
-                	isError = true;
+                if (hoursCell == null) {
+                    System.out.println("Pusta komorka w: " + i + ", 3");
+                    isError = true;
 
                 } else {
-                	taskHours = (int) hoursCell.getNumericCellValue();
-                	if (taskHours == 0) {
-                    	System.out.println("Zerowa wartosc w komorce : "+i+", 3");
-                    	isError = true;
-                	}
+                    taskHours = (int) hoursCell.getNumericCellValue();
+                    if (taskHours == 0) {
+                        System.out.println("Zerowa wartosc w komorce : " + i + ", 3");
+                        isError = true;
+                    }
                 }
                 if (isError) {
-                	System.out.println("Wiersz "+i+" nie uwzgledniony w raporcie");
-                	continue;
+                    System.out.println("Wiersz " + i + " nie uwzgledniony w raporcie");
+                    continue;
                 }
-                Task task = new Task(taskName, convertToLocalDate(taskDate),taskHours, projectName);
+                Task task = new Task(taskName, convertToLocalDate(taskDate), taskHours, projectName);
                 tasks.add(task);
             }
 

@@ -24,6 +24,15 @@ public class Company {
         this.persons.addAll(persons);
     }
 
+    public Person getPersonByName(String personName) {
+        for (Person person: persons) {
+            if (person.getName().equals(personName)) {
+                return person;
+            }
+        }
+        return null;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -43,4 +52,5 @@ public class Company {
                 "persons=" + persons +
                 '}';
     }
+
 }
