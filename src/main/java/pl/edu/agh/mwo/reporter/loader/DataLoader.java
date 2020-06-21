@@ -46,58 +46,54 @@ public class DataLoader {
         for (Sheet sheet : workbook) {
             String projectName = sheet.getSheetName();
             boolean isError = false;
-            for (int i = 1; i < sheet.getPhysicalNumberOfRows(); i++) {
+            for (int i = 1; i < sheet.getLastRowNum(); i++) {
                 isError = false;
                 Row row = sheet.getRow(i);
                 Cell dateCell = row.getCell(0);
                 Date taskDate = null;
                 try {
-                	taskDate = dateCell.getDateCellValue();
-                	if (taskDate == null) {
-                		System.out.println("Pusta komorka w: " + (i+1) + "A");
-                		isError = true;
-                	}
-                } catch (IllegalStateException e ) {
-                	System.out.println("Nieprawidlowa data w komorce :"+(i+1)+"A");
-                	isError = true;
+                    if (dateCell == null || dateCell.getDateCellValue() == null) {
+                        System.out.println("Pusta komorka w: " + (i + 1) + "A");
+                        isError = true;
+                    } else {
+                        taskDate = dateCell.getDateCellValue();
+                    }
+                } catch (IllegalStateException e) {
+                    System.out.println("Nieprawidlowa data w komorce :" + (i + 1) + "A");
+                    isError = true;
                 }
 
                 Cell taskCell = row.getCell(1);
                 String taskName = "";
                 try {
-                	taskName = taskCell.getStringCellValue();
-                	if (taskName.trim().length()==0) {
-                		System.out.println("Pusta komorka w: " + (i+1) + "B");
-                		isError = true;
-                	}
-                } catch(IllegalStateException e) {
-                	System.out.println("Komorka " + (i+1) + "B"+" nie zawiera prawdidlowej wartosci tekstowej");
-                	isError = true;
+                    if (taskCell == null || taskCell.getStringCellValue() == null) {
+                        System.out.println("Pusta komorka w: " + (i + 1) + "B");
+                        isError = true;
+                    } else {
+                        taskName = taskCell.getStringCellValue();
+                    }
+                } catch (IllegalStateException e) {
+                    System.out.println("Komorka " + (i + 1) + "B" + " nie zawiera prawdidlowej wartosci tekstowej");
+                    isError = true;
                 }
 
                 Cell hoursCell = row.getCell(2);
                 BigDecimal taskHours = BigDecimal.ZERO;
                 if (hoursCell == null) {
-                    System.out.println("Pusta komorka w: " + (i+1) + "C");
+                    System.out.println("Pusta komorka w: " + (i + 1) + "C");
                     isError = true;
-
                 } else {
-                	try {
-                		taskHours = BigDecimal.valueOf(hoursCell.getNumericCellValue());
-                		if (taskHours.equals(BigDecimal.ZERO)) {
-                			System.out.println("Zerowa wartosc w komorce : " + (i+1) + "C");
-                			isError = true;
-                		}
-                	} catch (IllegalStateException e) {
-                		System.out.println("Wartosc nienumeryczna w komorce : "+(i+1)+"C");
-                		isError = true;
-                	}
+                    try {
+                        taskHours = BigDecimal.valueOf(hoursCell.getNumericCellValue());
+                    } catch (IllegalStateException e) {
+                        System.out.println("Wartosc nienumeryczna w komorce : " + (i + 1) + "C");
+                        isError = true;
+                    }
                 }
                 if (isError) {
-                    System.out.println("Wiersz " + (i+1) + " nie uwzgledniony w raporcie");
+                    System.out.println("Wiersz " + (i + 1) + " nie uwzgledniony w raporcie");
                     continue;
                 }
-                System.out.println(taskName+": "+taskHours);
                 Task task = new Task(taskName, convertToLocalDate(taskDate), taskHours, projectName);
                 tasks.add(task);
             }
