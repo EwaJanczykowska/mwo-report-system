@@ -1,0 +1,45 @@
+___  ____    _  _____       ______ ___________ ___________ _____ ___________
+|  \/  | |  | ||  _  |      | ___ \  ___| ___ \  _  | ___ \_   _|  ___| ___ \
+| .  . | |  | || | | |______| |_/ / |__ | |_/ / | | | |_/ / | | | |__ | |_/ /
+| |\/| | |/\| || | | |______|    /|  __||  __/| | | |    /  | | |  __||    /
+| |  | \  /\  /\ \_/ /      | |\ \| |___| |   \ \_/ / |\ \  | | | |___| |\ \
+\_|  |_/\/  \/  \___/       \_| \_\____/\_|    \___/\_| \_| \_/ \____/\_| \_|
+
+-----------------------------------------------------------------------------
+----------------------------Command Line Options-----------------------------
+-----------------------------------------------------------------------------
+
+-source <place path of source files here>
+
+This can be either catalog with several excel files or with just one
+-----------------------------------------------------------------------------
+
+-rtype <choose between 1,2,3,4,5>
+
+1 - Displays list of employees with their total hours
+2 - Displays list of projects with their total hours
+3 - Displays list of employees with total hours spent on certain project
+4 - Displays top 10 tasks regarding hours spent within all projects
+5 - Search specific phrase regarding tasks,
+    displays list of tasks with total hours
+
+-----------------------------------------------------------------------------
+
+-datefilter <yyyy/mm/dd-yyyy/mm/dd>
+
+This filters data in specified range of time
+
+-----------------------------------------------------------------------------
+
+-export
+
+This option generates Excel file with selected report
+
+-----------------------------------------------------------------------------
+
+-employeefilter <surname_name>
+
+This filters files regarding specified employee
+
+-----------------------------------------------------------------------------
+-----------------------------------------------------------------------------
