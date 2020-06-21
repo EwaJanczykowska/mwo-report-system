@@ -63,16 +63,15 @@ public class DataLoader {
 
                 Cell taskCell = row.getCell(1);
                 String taskName = "";
-                if (taskCell == null) {
-                    System.out.println("Pusta komorka w: " + (i+1) + "B");
-                    isError = true;
-                } else {
-                    taskName = taskCell.getStringCellValue();
-
-                    if (taskName == "") {
-                        System.out.println("Pusta komorka w: " + (i+1) + "B");
-                        isError = true;
-                    }
+                try {
+                	taskName = taskCell.getStringCellValue();
+                	if (taskName.trim().length()==0) {
+                		System.out.println("Pusta komorka w: " + (i+1) + "B");
+                		isError = true;
+                	}                	
+                } catch(IllegalStateException e) {
+                	System.out.println("Komorka " + (i+1) + "B"+" nie zawiera prawdidlowej wartosci tekstowej");
+                	isError = true;                	
                 }
 
                 Cell hoursCell = row.getCell(2);
