@@ -25,7 +25,7 @@ public class Report1Printer implements IReportPrinter {
         System.out.printf("%-40s %-15s\n", headers[0], headers[1]);
 
         report.getHoursPerPerson().forEach((person, hours) -> {
-            System.out.printf("%-40s %-15d\n", person.getName(), hours);
+            System.out.printf("%-40s %-15s\n", person.getName(), hours);
         });
 
     }
@@ -71,7 +71,7 @@ public class Report1Printer implements IReportPrinter {
             for (Person person : report.getPersons()) {
                 XSSFRow row = sheet.createRow(startRowNum++);
                 row.createCell(0).setCellValue(person.getName());
-                row.createCell(1).setCellValue(report.getHoursForPerson(person));
+                row.createCell(1).setCellValue(report.getHoursForPerson(person).doubleValue());
             }
 
             FileOutputStream fileOut = new FileOutputStream(excelFilePath);
