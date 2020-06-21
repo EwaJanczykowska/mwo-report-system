@@ -23,9 +23,17 @@ public class Main {
 
         Report report1 = new Report1(company);
         report1.printToConsole();
-//=========================
-        ReportTest export = new ReportTest(company);
-        export.printToExcel();
+//================= ========
+//Raport 1 - do Excela
+       String[]   header = {"Nazwisko i imie", "Liczba godzin"};
+        ReportTest raport1 = new ReportTest(company,
+                "resources\\Reports.xlsm",
+                "Report1",
+                header
+                );//name of sheet);
+        raport1.printToExcel();
+
+   //=====================================================
     }
 
 }
