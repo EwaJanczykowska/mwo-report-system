@@ -8,7 +8,7 @@ import java.util.Map;
 import java.util.Set;
 
 public class Report1 {
-    private final String description = "Raport liczby godzim poswieconych na projekty w rozbiciu na pracownikow";
+    private final String description = "Raport liczby godzin poswieconych na projekty w rozbiciu na pracownikow";
     private final Map<Person, BigDecimal> hoursPerPerson;
 
     public Report1() {

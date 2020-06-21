@@ -5,7 +5,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Report2 {
-    private final String description = "Raport liczby godzim poswieconych na projekty";
+    private final String description = "Raport liczby godzin poswieconych na projekty";
     private final Map<String, BigDecimal> hoursPerProject;
 
     public Report2() {
