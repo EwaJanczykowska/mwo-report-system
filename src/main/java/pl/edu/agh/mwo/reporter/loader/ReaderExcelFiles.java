@@ -1,4 +1,4 @@
-package pl.edu.agh.mwo.reporter;
+package pl.edu.agh.mwo.reporter.loader;
 
 import java.io.File;
 import java.io.FilenameFilter;

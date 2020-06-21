@@ -1,4 +1,4 @@
-package pl.edu.agh.mwo.reporter;
+package pl.edu.agh.mwo.reporter.reports;
 
 import org.apache.poi.xssf.usermodel.XSSFCell;
 import org.apache.poi.xssf.usermodel.XSSFRow;
