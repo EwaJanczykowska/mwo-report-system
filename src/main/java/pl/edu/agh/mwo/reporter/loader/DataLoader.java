@@ -46,7 +46,7 @@ public class DataLoader {
         for (Sheet sheet : workbook) {
             String projectName = sheet.getSheetName();
             boolean isError = false;
-            for (int i = 1; i < sheet.getLastRowNum(); i++) {
+            for (int i = 1; i <= sheet.getLastRowNum(); i++) {
                 isError = false;
                 Row row = sheet.getRow(i);
                 Cell dateCell = row.getCell(0);
