@@ -18,10 +18,11 @@ public class Main {
         ArrayList<Path> allFiles = f.getAllFiles(directory);
 
         DataLoader dataLoader = new DataLoader();
-        Company company = dataLoader.loadData(allFiles.get(0));
 
-        Report report1 = new Report1(company);
-        report1.printToConsole();
+    	Company company = dataLoader.loadData(allFiles.get(0));        	
+    	Report report1 = new Report1(company);
+    	report1.printToConsole();
+
     }
 
 }
