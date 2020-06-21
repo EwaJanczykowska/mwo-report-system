@@ -5,10 +5,12 @@ import pl.edu.agh.mwo.reporter.loader.DataLoader;
 import pl.edu.agh.mwo.reporter.loader.ReaderExcelFiles;
 import pl.edu.agh.mwo.reporter.model.Company;
 import pl.edu.agh.mwo.reporter.model.report.Report1;
+import pl.edu.agh.mwo.reporter.model.report.Report2;
 import pl.edu.agh.mwo.reporter.report.generator.IReportGenerator;
 import pl.edu.agh.mwo.reporter.report.generator.ReportGenerator;
 import pl.edu.agh.mwo.reporter.report.printer.IReportPrinter;
 import pl.edu.agh.mwo.reporter.report.printer.Report1Printer;
+import pl.edu.agh.mwo.reporter.report.printer.Report2Printer;
 
 import java.io.IOException;
 import java.nio.file.Path;
@@ -45,19 +47,18 @@ public class Main {
                     Report1 report1 = reportGenerator.generateReport1();
                     IReportPrinter printer = new Report1Printer(report1);
                     printer.printToConsole();
-                    printer.printToExcel(OUTPUT_PATH);
                     if (cmd.hasOption("export")) {
-                        // excel printer here
+                        printer.printToExcel(OUTPUT_PATH);
                     }
                     break;
-//                case "2":
-//                    Report2 report2 = reportGenerator.generateReport2();
-//                    IReportPrinter printer2 = new Report1Printer(report2);
-//                    printer2.printToConsole();
-//                    if (cmd.hasOption("export")) {
-//                        // excel printer here
-//                    }
-//                    break;
+                case "2":
+                    Report2 report2 = reportGenerator.generateReport2();
+                    IReportPrinter printer2 = new Report2Printer(report2);
+                    printer2.printToConsole();
+                    if (cmd.hasOption("export")) {
+                        printer2.printToExcel(OUTPUT_PATH);
+                    }
+                    break;
 //                case "3":
 //                    Report3 report3 = reportGenerator.generateReport3();
 //                    IReportPrinter printer3 = new Report1Printer(report3);
