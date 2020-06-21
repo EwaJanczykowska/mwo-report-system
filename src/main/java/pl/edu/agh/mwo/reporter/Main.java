@@ -35,7 +35,7 @@ public class Main {
             ArrayList<Path> allFiles = f.getAllFiles(directory);
 
             DataLoader dataLoader = new DataLoader();
-            Company company = dataLoader.loadData(allFiles.get(0));
+            Company company = dataLoader.loadData(allFiles);
 
             IReportGenerator reportGenerator = new ReportGenerator(company);
 
