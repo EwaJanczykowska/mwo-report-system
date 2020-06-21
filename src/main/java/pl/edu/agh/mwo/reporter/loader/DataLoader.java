@@ -49,22 +49,28 @@ public class DataLoader {
                 isError = false;
                 Row row = sheet.getRow(i);
                 Cell dateCell = row.getCell(0);
-                Date taskDate = dateCell.getDateCellValue();
-                if (taskDate == null) {
-                    System.out.println("Pusta komorka w: " + i + ", 1");
-                    isError = true;
+                Date taskDate = null;
+                try {
+                	taskDate = dateCell.getDateCellValue();
+                	if (taskDate == null) {
+                		System.out.println("Pusta komorka w: " + (i+1) + "A");
+                		isError = true;
+                	}                	
+                } catch (IllegalStateException e ) {
+                	System.out.println("Nieprawidlowa data w komorce :"+(i+1)+"A");
+                	isError = true;
                 }
 
                 Cell taskCell = row.getCell(1);
                 String taskName = "";
                 if (taskCell == null) {
-                    System.out.println("Pusta komorka w: " + i + ", 2");
+                    System.out.println("Pusta komorka w: " + (i+1) + "B");
                     isError = true;
                 } else {
                     taskName = taskCell.getStringCellValue();
 
                     if (taskName == "") {
-                        System.out.println("Pusta komorka w: " + i + ", 2");
+                        System.out.println("Pusta komorka w: " + (i+1) + "B");
                         isError = true;
                     }
                 }
@@ -72,20 +78,26 @@ public class DataLoader {
                 Cell hoursCell = row.getCell(2);
                 int taskHours = 0;
                 if (hoursCell == null) {
-                    System.out.println("Pusta komorka w: " + i + ", 3");
+                    System.out.println("Pusta komorka w: " + (i+1) + "C");
                     isError = true;
 
                 } else {
-                    taskHours = (int) hoursCell.getNumericCellValue();
-                    if (taskHours == 0) {
-                        System.out.println("Zerowa wartosc w komorce : " + i + ", 3");
-                        isError = true;
-                    }
+                	try {
+                		taskHours = (int) hoursCell.getNumericCellValue();
+                		if (taskHours == 0) {
+                			System.out.println("Zerowa wartosc w komorce : " + (i+1) + "C");
+                			isError = true;
+                		}
+                	} catch (IllegalStateException e) {
+                		System.out.println("Wartosc nienumeryczna w komorce : "+(i+1)+"C");
+                		isError = true;
+                	}
                 }
                 if (isError) {
-                    System.out.println("Wiersz " + i + " nie uwzgledniony w raporcie");
+                    System.out.println("Wiersz " + (i+1) + " nie uwzgledniony w raporcie");
                     continue;
                 }
+                System.out.println(taskName+": "+taskHours);
                 Task task = new Task(taskName, convertToLocalDate(taskDate), taskHours, projectName);
                 tasks.add(task);
             }
