@@ -46,45 +46,52 @@ public class DataLoader {
         for (Sheet sheet : workbook) {
             String projectName = sheet.getSheetName();
             boolean isError = false;
-            for (int i = 1; i < sheet.getPhysicalNumberOfRows(); i++) {
+            for (int i = 1; i <= sheet.getLastRowNum(); i++) {
                 isError = false;
                 Row row = sheet.getRow(i);
                 Cell dateCell = row.getCell(0);
-                Date taskDate = dateCell.getDateCellValue();
-                if (taskDate == null) {
-                    System.out.println("Pusta komorka w: " + i + ", 1");
+                Date taskDate = null;
+                try {
+                    if (dateCell == null || dateCell.getDateCellValue() == null) {
+                        System.out.println("Pusta komorka w: " + (i + 1) + "A");
+                        isError = true;
+                    } else {
+                        taskDate = dateCell.getDateCellValue();
+                    }
+                } catch (IllegalStateException e) {
+                    System.out.println("Nieprawidlowa data w komorce :" + (i + 1) + "A");
                     isError = true;
                 }
 
                 Cell taskCell = row.getCell(1);
                 String taskName = "";
-                if (taskCell == null) {
-                    System.out.println("Pusta komorka w: " + i + ", 2");
-                    isError = true;
-                } else {
-                    taskName = taskCell.getStringCellValue();
-
-                    if (taskName.equals("")) {
-                        System.out.println("Pusta komorka w: " + i + ", 2");
+                try {
+                    if (taskCell == null || taskCell.getStringCellValue() == null) {
+                        System.out.println("Pusta komorka w: " + (i + 1) + "B");
                         isError = true;
+                    } else {
+                        taskName = taskCell.getStringCellValue();
                     }
+                } catch (IllegalStateException e) {
+                    System.out.println("Komorka " + (i + 1) + "B" + " nie zawiera prawdidlowej wartosci tekstowej");
+                    isError = true;
                 }
 
                 Cell hoursCell = row.getCell(2);
                 BigDecimal taskHours = BigDecimal.ZERO;
                 if (hoursCell == null) {
-                    System.out.println("Pusta komorka w: " + i + ", 3");
+                    System.out.println("Pusta komorka w: " + (i + 1) + "C");
                     isError = true;
-
                 } else {
-                    taskHours = BigDecimal.valueOf(hoursCell.getNumericCellValue());
-                    if (taskHours.equals(BigDecimal.ZERO)) {
-                        System.out.println("Zerowa wartosc w komorce : " + i + ", 3");
+                    try {
+                        taskHours = BigDecimal.valueOf(hoursCell.getNumericCellValue());
+                    } catch (IllegalStateException e) {
+                        System.out.println("Wartosc nienumeryczna w komorce : " + (i + 1) + "C");
                         isError = true;
                     }
                 }
                 if (isError) {
-                    System.out.println("Wiersz " + i + " nie uwzgledniony w raporcie");
+                    System.out.println("Wiersz " + (i + 1) + " nie uwzgledniony w raporcie");
                     continue;
                 }
                 Task task = new Task(taskName, convertToLocalDate(taskDate), taskHours, projectName);
