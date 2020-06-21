@@ -14,7 +14,7 @@ public class Report1Printer implements IReportPrinter {
         System.out.printf("%-40s %-15s\n", "Imie nazwisko", "Liczba godzin");
 
         report.getHoursPerPerson().forEach((person, hours) -> {
-            System.out.printf("%-40s %-15d\n", person.getName(), hours);
+            System.out.printf("%-40s %-15s\n", person.getName(), hours);
         });
 
     }

@@ -37,10 +37,10 @@ public class Task {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Task task = (Task) o;
-        return hours == task.hours &&
-                name.equals(task.name) &&
-                date.equals(task.date) &&
-                projectName.equals(task.projectName);
+        return Objects.equals(name, task.name) &&
+                Objects.equals(date, task.date) &&
+                Objects.equals(hours, task.hours) &&
+                Objects.equals(projectName, task.projectName);
     }
 
     @Override
