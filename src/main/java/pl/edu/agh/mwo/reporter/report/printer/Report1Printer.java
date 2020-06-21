@@ -1,43 +1,36 @@
-package pl.edu.agh.mwo.reporter.reports;
+package pl.edu.agh.mwo.reporter.report.printer;
+
+import java.io.FileOutputStream;
+import java.io.IOException;
 
 import org.apache.poi.EncryptedDocumentException;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
-import pl.edu.agh.mwo.reporter.model.Company;
+
 import pl.edu.agh.mwo.reporter.model.Person;
-import pl.edu.agh.mwo.reporter.model.Task;
+import pl.edu.agh.mwo.reporter.model.report.Report1;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
+public class Report1Printer implements IReportPrinter {
 
+    private final String[] headers = {"Nazwisko i imie", "Liczba godzin"};
+    private final Report1 report;
 
-public class ReportTest implements Report {
-
-    private final Company company;
-    private final String filename;
-    private final String sheetName;
-    private  String title;
-    private final String[] headers;
-
-
-    public ReportTest(Company company, String filename, String sheetName, String title, String[] headers) {
-        this.company = company;
-        this.filename = filename;
-        this.sheetName = sheetName;
-        this.title = title;
-        this.headers = headers;
+    public Report1Printer(Report1 report1) {
+        this.report = report1;
     }
 
     public void printToConsole() {
+        System.out.printf("%-40s %-15s\n", headers[0], headers[1]);
+
+        report.getHoursPerPerson().forEach((person, hours) -> {
+            System.out.printf("%-40s %-15d\n", person.getName(), hours);
+        });
+
     }
 
-
-    public void printToExcel() throws IOException {
-
-        File file = new File(filename);
+    public void printToExcel(String excelFilePath) {
 
         try {
 //            //jesli plik istnieje to
@@ -54,13 +47,13 @@ public class ReportTest implements Report {
 //            }
 
             XSSFWorkbook wb = new XSSFWorkbook();
-            XSSFSheet sheet = wb.createSheet(sheetName);
+            XSSFSheet sheet = wb.createSheet("Report1");
             // XSSFSheet sheet = wb.getSheet(sheetName);
             //title report
 
             XSSFRow titleRow = sheet.createRow(0);
-          //  Cell celltitle = titleRow.createCell(title);
-            titleRow.createCell(0).setCellValue(title);
+            //  Cell celltitle = titleRow.createCell(title);
+            titleRow.createCell(0).setCellValue(report.getDescription());
 
             //Header
             XSSFRow headerRow = sheet.createRow(2);
@@ -74,21 +67,14 @@ public class ReportTest implements Report {
             }
             /* Header ends*/
 
-            int rowNum = 3;
-
-            for (Person person : company.getPersons()) {
-                int hours = 0;
-                XSSFRow row = sheet.createRow(rowNum++);
-
-                for (Task task : person.getTasks()) {
-                    hours += task.getHours();
-                }
-
+            int startRowNum = 3;
+            for (Person person : report.getPersons()) {
+                XSSFRow row = sheet.createRow(startRowNum++);
                 row.createCell(0).setCellValue(person.getName());
-                row.createCell(1).setCellValue(hours);
+                row.createCell(1).setCellValue(report.getHoursForPerson(person));
             }
 
-            FileOutputStream fileOut = new FileOutputStream(filename);
+            FileOutputStream fileOut = new FileOutputStream(excelFilePath);
             //zapisz workbook do Outputstream.
             wb.write(fileOut);
             fileOut.flush();
@@ -99,4 +85,3 @@ public class ReportTest implements Report {
         }
     }
 }
-

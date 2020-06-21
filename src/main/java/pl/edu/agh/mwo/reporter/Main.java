@@ -3,16 +3,21 @@ package pl.edu.agh.mwo.reporter;
 import pl.edu.agh.mwo.reporter.loader.DataLoader;
 import pl.edu.agh.mwo.reporter.loader.ReaderExcelFiles;
 import pl.edu.agh.mwo.reporter.model.Company;
-import pl.edu.agh.mwo.reporter.reports.Report;
-import pl.edu.agh.mwo.reporter.reports.Report1;
-import pl.edu.agh.mwo.reporter.reports.ReportTest;
+
+import pl.edu.agh.mwo.reporter.model.report.Report1;
+import pl.edu.agh.mwo.reporter.report.generator.IReportGenerator;
+import pl.edu.agh.mwo.reporter.report.generator.ReportGenerator;
+import pl.edu.agh.mwo.reporter.report.printer.IReportPrinter;
+import pl.edu.agh.mwo.reporter.report.printer.Report1Printer;
 
 import java.io.IOException;
 import java.nio.file.Path;
 import java.util.ArrayList;
 
 public class Main {
-final static String OUTPU_PATH = "resources\\Reports.xlsm";
+
+    final static String OUTPUT_PATH = "resources\\Reports.xlsm";
+
     public static void main(String[] args) throws IOException {
         String directory = args[0];
 
@@ -22,21 +27,13 @@ final static String OUTPU_PATH = "resources\\Reports.xlsm";
         DataLoader dataLoader = new DataLoader();
         Company company = dataLoader.loadData(allFiles.get(0));
 
-        Report report1 = new Report1(company);
-        report1.printToConsole();
-//================= ========
-//Raport 1 - do Excela
-       String[]   header = {"Nazwisko i imie", "Liczba godzin"};
-       String title ="Raport liczby godzim poswieconych na projekty w rozbiciu na pracownikow";
-        ReportTest raport1 = new ReportTest(company,
-                OUTPU_PATH,
-                "Report1",
-                title,
-                header
-                );//name of sheet);
-        raport1.printToExcel();
+        IReportGenerator reportGenerator = new ReportGenerator(company);
+        Report1 report = reportGenerator.generateReport1();
+        IReportPrinter printer = new Report1Printer(report);
 
-   //=====================================================
+        printer.printToConsole();
+        printer.printToExcel(OUTPUT_PATH);
+
     }
 
 }
