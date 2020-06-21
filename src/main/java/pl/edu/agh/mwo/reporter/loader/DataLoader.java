@@ -7,6 +7,7 @@ import pl.edu.agh.mwo.reporter.model.Task;
 
 import java.io.File;
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.nio.file.Path;
 import java.time.LocalDate;
 import java.time.ZoneId;
@@ -55,7 +56,7 @@ public class DataLoader {
                 	if (taskDate == null) {
                 		System.out.println("Pusta komorka w: " + (i+1) + "A");
                 		isError = true;
-                	}                	
+                	}
                 } catch (IllegalStateException e ) {
                 	System.out.println("Nieprawidlowa data w komorce :"+(i+1)+"A");
                 	isError = true;
@@ -68,22 +69,22 @@ public class DataLoader {
                 	if (taskName.trim().length()==0) {
                 		System.out.println("Pusta komorka w: " + (i+1) + "B");
                 		isError = true;
-                	}                	
+                	}
                 } catch(IllegalStateException e) {
                 	System.out.println("Komorka " + (i+1) + "B"+" nie zawiera prawdidlowej wartosci tekstowej");
-                	isError = true;                	
+                	isError = true;
                 }
 
                 Cell hoursCell = row.getCell(2);
-                int taskHours = 0;
+                BigDecimal taskHours = BigDecimal.ZERO;
                 if (hoursCell == null) {
                     System.out.println("Pusta komorka w: " + (i+1) + "C");
                     isError = true;
 
                 } else {
                 	try {
-                		taskHours = (int) hoursCell.getNumericCellValue();
-                		if (taskHours == 0) {
+                		taskHours = BigDecimal.valueOf(hoursCell.getNumericCellValue());
+                		if (taskHours.equals(BigDecimal.ZERO)) {
                 			System.out.println("Zerowa wartosc w komorce : " + (i+1) + "C");
                 			isError = true;
                 		}
