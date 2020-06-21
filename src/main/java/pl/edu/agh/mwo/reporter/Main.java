@@ -18,7 +18,7 @@ import java.util.ArrayList;
 
 public class Main {
 
-    final static String OUTPUT_PATH = "resources\\Reports.xlsm";
+    final static String OUTPUT_PATH = "resources\\Reports.xlsx";
 
     public static void main(String[] args) throws IOException, ParseException {
 
