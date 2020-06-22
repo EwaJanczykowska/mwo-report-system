@@ -25,7 +25,7 @@ public class Report1Printer implements IReportPrinter {
     }
 
     public void printToExcel(String excelFilePath) {
-        ExcelExporter excelExporter = new ExcelExporter("report1", report.getDescription(), HEADERS);
+        ExcelExporter excelExporter = new ExcelExporter(excelFilePath, "report1", report.getDescription(), HEADERS);
         excelExporter.setColumnsWidths(COLUMNS_WIDTHS);
 
         for (Person person : report.getPersons()) {
@@ -34,6 +34,6 @@ public class Report1Printer implements IReportPrinter {
             excelExporter.addCell(1, report.getHoursForPerson(person));
         }
 
-        excelExporter.saveToFile(excelFilePath);
+        excelExporter.saveToFile();
     }
 }

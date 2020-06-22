@@ -16,11 +16,14 @@ public class ExcelExporter {
 
     private final XSSFSheet sheet;
 
+    private final String excelFilePath;
+
     private int rowsCount;
 
     private Row lastRow;
 
-    public ExcelExporter(String reportName, String title, String[] headers) {
+    public ExcelExporter(String excelFilePath, String reportName, String title, String[] headers) {
+        this.excelFilePath = excelFilePath;
         workbook = new XSSFWorkbook();
         sheet = workbook.createSheet(reportName);
 
@@ -58,7 +61,7 @@ public class ExcelExporter {
         }
     }
 
-    public void saveToFile(String excelFilePath) {
+    public void saveToFile() {
         try {
             FileOutputStream fileOut = new FileOutputStream(excelFilePath);
             workbook.write(fileOut);

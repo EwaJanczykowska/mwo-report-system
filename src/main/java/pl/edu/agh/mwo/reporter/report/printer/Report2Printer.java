@@ -29,7 +29,7 @@ public class Report2Printer implements IReportPrinter {
     }
 
     public void printToExcel(String excelFilePath) {
-        ExcelExporter excelExporter = new ExcelExporter("report2", report.getDescription(), HEADERS);
+        ExcelExporter excelExporter = new ExcelExporter(excelFilePath, "report2", report.getDescription(), HEADERS);
         excelExporter.setColumnsWidths(COLUMNS_WIDTHS);
 
         for (Map.Entry<String, BigDecimal> entry : report.getHoursPerProject().entrySet()) {
@@ -41,6 +41,6 @@ public class Report2Printer implements IReportPrinter {
             excelExporter.addCell(1, value);
         }
 
-        excelExporter.saveToFile(excelFilePath);
+        excelExporter.saveToFile();
     }
 }
