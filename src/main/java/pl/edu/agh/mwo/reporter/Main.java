@@ -19,8 +19,6 @@ import java.util.ArrayList;
 
 public class Main {
 
-    //final static String OUTPUT_PATH = "resources\\Reports.xlsx"; //win
-   // final static String OUTPUT_PATH = "resources/Reports.xlsx"; //mac
     final static String OUTPUT_FILE = "Reports.xls";
     final static String OUTPUT_PATH = "resources" + File.separator + OUTPUT_FILE; //mac i ?win
 
