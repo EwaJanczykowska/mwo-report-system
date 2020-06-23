@@ -1,32 +1,33 @@
 package pl.edu.agh.mwo.reporter.report.printer;
 
+
 import org.apache.poi.EncryptedDocumentException;
+import org.apache.poi.hssf.usermodel.HSSFSheet;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
-import org.apache.poi.xssf.usermodel.XSSFSheet;
-import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.math.BigDecimal;
 
 public class ExcelExporter {
 
-    private final XSSFWorkbook workbook;
+    private HSSFWorkbook workbook;
 
-    private final XSSFSheet sheet;
-
-    private final String excelFilePath;
+    private HSSFSheet sheet;
 
     private int rowsCount;
 
     private Row lastRow;
 
-    public ExcelExporter(String excelFilePath, String reportName, String title, String[] headers) {
-        this.excelFilePath = excelFilePath;
-        workbook = new XSSFWorkbook();
-        sheet = workbook.createSheet(reportName);
+    private final String exportFilePath;
 
+    public ExcelExporter(String exportFilePath, String reportName, String title, String[] headers) {
+        this.exportFilePath = exportFilePath;
+        initializeWorkbook();
         addRow();
         addCell(0, title);
 
@@ -34,6 +35,27 @@ public class ExcelExporter {
         addRow();
         for (int i = 0; i < headers.length; i++) {
             addCell(i, headers[i]);
+        }
+
+    }
+
+    private void initializeWorkbook() {
+        try {
+            File fileOut = new File(exportFilePath);
+
+            if (fileOut.exists()) {
+                FileInputStream fileInputStream = new FileInputStream(exportFilePath);
+                workbook = new HSSFWorkbook(new FileInputStream(fileOut));
+                sheet = workbook.getSheetAt(0);
+                fileInputStream.close();
+
+            } else {
+                workbook = new HSSFWorkbook();
+                sheet = workbook.createSheet("Report");
+
+            }
+        } catch (EncryptedDocumentException | IOException e) {
+            System.out.println("Błąd przy otwieraniu pliku: " + exportFilePath);
         }
     }
 
@@ -63,14 +85,12 @@ public class ExcelExporter {
 
     public void saveToFile() {
         try {
-            FileOutputStream fileOut = new FileOutputStream(excelFilePath);
+            FileOutputStream fileOut = new FileOutputStream(exportFilePath);
             workbook.write(fileOut);
             fileOut.flush();
             fileOut.close();
         } catch (EncryptedDocumentException | IOException e) {
-            System.out.println("Błąd przy zapisywaniu pliku: " + excelFilePath);
+            System.out.println("Błąd przy zapisywaniu pliku: " + exportFilePath);
         }
     }
 }
-
-
