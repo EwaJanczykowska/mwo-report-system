@@ -22,50 +22,63 @@ import java.util.Locale;
 
 public class Main {
 
-    final static String OUTPUT_PATH = "resources\\Reports.xlsm";
-
     public static void main(String[] args) throws IOException, ParseException {
 
         CommandLineParser parser = new DefaultParser();
         Options options = new Options();
         options.addOption("source", true, "source of data files");
         options.addOption("rtype", true, "report type");
-        options.addOption("export", false, "export report to excel");
+        options.addOption("export", true, "export report to excel");
         options.addOption("datefilter", true, "date filter");
         options.addOption("employeefilter", true, "employee name filter");
         try {
             CommandLine cmd = parser.parse(options, args);
             String directory = cmd.getOptionValue("source");
             String rType = cmd.getOptionValue("rtype");
-            String datefilter = cmd.getOptionValue("datefilter");
+            String dateFilter = cmd.getOptionValue("datefilter");
+            String employeeFilter = cmd.getOptionValue("employeefilter");
+            String outputPath = cmd.getOptionValue("export");
 
             LocalDate dateFrom = null;
             LocalDate dateTo = null;
-            boolean isWrongFormat = false;
-            if (datefilter != null) {
-                LocalDate[] receivedDates = dateFilter(datefilter);
+            String employee = null;
+
+            boolean isError = false;
+
+            if (!cmd.hasOption("source")) {
+                isError = true;
+                System.out.println("No source specified\nUse -source <path> to specify");
+            } else if (!cmd.hasOption("rtype")) {
+                isError = true;
+                System.out.println("No report type specified\nUse -rtype <numbers 1 to 5> to specify");
+            } else if (dateFilter != null) {
+                LocalDate[] receivedDates = dateFilter(dateFilter);
                 dateFrom = receivedDates[0];
                 dateTo = receivedDates[1];
                 if (dateFrom == null) {
-                    isWrongFormat = true;
+                    isError = true;
+                }
+            } else if (employeeFilter != null) {
+                employee = employeeFilter(employeeFilter);
+                if (employee == null) {
+                    isError = true;
                 }
             }
 
-            ReaderExcelFiles f = new ReaderExcelFiles();
-            ArrayList<Path> allFiles = f.getAllFiles(directory);
-            DataLoader dataLoader = new DataLoader();
-            Company company = dataLoader.loadData(allFiles);
-//            Company company = dataLoader.loadData(allFiles, dateFrom, dateTo);
-            IReportGenerator reportGenerator = new ReportGenerator(company);
-
-            if (!isWrongFormat) {
+            if (!isError) {
+                ReaderExcelFiles f = new ReaderExcelFiles();
+                ArrayList<Path> allFiles = f.getAllFiles(directory);
+                DataLoader dataLoader = new DataLoader();
+                Company company = dataLoader.loadData(allFiles);
+//            Company company = dataLoader.loadData(allFiles, dateFrom, dateTo, employee);
+                IReportGenerator reportGenerator = new ReportGenerator(company);
                 switch (rType) {
                     case "1":
                         Report1 report1 = reportGenerator.generateReport1();
                         IReportPrinter printer = new Report1Printer(report1);
                         printer.printToConsole();
                         if (cmd.hasOption("export")) {
-                            printer.printToExcel(OUTPUT_PATH);
+                            printer.printToExcel(outputPath);
                         }
                         break;
                     case "2":
@@ -73,7 +86,7 @@ public class Main {
                         IReportPrinter printer2 = new Report2Printer(report2);
                         printer2.printToConsole();
                         if (cmd.hasOption("export")) {
-                            printer2.printToExcel(OUTPUT_PATH);
+                            printer2.printToExcel(outputPath);
                         }
                         break;
                     default:
@@ -85,7 +98,6 @@ public class Main {
         } catch (DateTimeParseException b) {
             System.out.println("Wrong dates provided, for example 13 month, 32 day etc.");
         }
-
     }
 
     private static LocalDate[] dateFilter(String inputDate) {
@@ -114,6 +126,53 @@ public class Main {
             dateFrom = null;
         }
         return new LocalDate[]{dateFrom, dateTo};
+    }
+
+    private static String employeeFilter(String inputEmployee) {
+        String employeefiltercheck = polishLettersNormalizer(inputEmployee.toLowerCase()).replaceAll("[a-z]", " ").trim();
+        String employee = null;
+
+        if (employeefiltercheck.equals("_")) {
+            employee = inputEmployee.toLowerCase().trim();
+        } else {
+            System.out.println("Wrong employee format provided, report will not be generated");
+        }
+        return employee;
+    }
+
+    private static String polishLettersNormalizer(String inputString) {
+        for (int i = 0; i < inputString.length(); i++) {
+            switch (inputString.charAt(i)) {
+                case 'ą':
+                    inputString = inputString.replace('ą', 'a');
+                    break;
+                case 'ć':
+                    inputString = inputString.replace('ć', 'c');
+                    break;
+                case 'ę':
+                    inputString = inputString.replace('ę', 'e');
+                    break;
+                case 'ł':
+                    inputString = inputString.replace('ł', 'l');
+                    break;
+                case 'ń':
+                    inputString = inputString.replace('ń', 'n');
+                    break;
+                case 'ó':
+                    inputString = inputString.replace('ó', 'o');
+                    break;
+                case 'ś':
+                    inputString = inputString.replace('ś', 's');
+                    break;
+                case 'ź':
+                    inputString = inputString.replace('ź', 'z');
+                    break;
+                case 'ż':
+                    inputString = inputString.replace('ż', 'z');
+                    break;
+            }
+        }
+        return inputString;
     }
 
 }
