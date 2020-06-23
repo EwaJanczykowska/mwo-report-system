@@ -12,14 +12,17 @@ import pl.edu.agh.mwo.reporter.report.printer.IReportPrinter;
 import pl.edu.agh.mwo.reporter.report.printer.Report1Printer;
 import pl.edu.agh.mwo.reporter.report.printer.Report2Printer;
 
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.util.ArrayList;
 
 public class Main {
 
-    final static String OUTPUT_PATH = "resources\\Reports.xlsm";
-
+    //final static String OUTPUT_PATH = "resources\\Reports.xlsx"; //win
+   // final static String OUTPUT_PATH = "resources/Reports.xlsx"; //mac
+    final static String OUTPUT_PATH = "resources" + File.separator + "Reports.xls"; //mac i ?win
+   // File f = new File("resources" + File.separator() + "Reports.xlsx");
     public static void main(String[] args) throws IOException, ParseException {
 
         CommandLineParser parser = new DefaultParser();

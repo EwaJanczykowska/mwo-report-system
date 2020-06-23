@@ -1,31 +1,52 @@
 package pl.edu.agh.mwo.reporter.report.printer;
 
 import org.apache.poi.EncryptedDocumentException;
+import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
-import java.io.FileOutputStream;
-import java.io.IOException;
+import java.io.*;
 import java.math.BigDecimal;
 
 public class ExcelExporter {
 
-    private final XSSFWorkbook workbook;
+    private  XSSFWorkbook workbook;
 
-    private final XSSFSheet sheet;
-
-    private final String excelFilePath;
+    private  XSSFSheet sheet;
 
     private int rowsCount;
 
     private Row lastRow;
 
+    public void OpenFile(String excelFilePath) {
+        try {
+            File fileOut = new File(excelFilePath);
+            if (fileOut.exists()){
+                workbook = new XSSFWorkbook(fileOut);
+                sheet = workbook.getSheetAt(0);
+                workbook.close();
+            } else {
+                workbook = new XSSFWorkbook();
+                sheet = workbook.createSheet("Report1");
+
+            }
+        } catch (EncryptedDocumentException | IOException | InvalidFormatException e) {
+            System.out.println("Błąd przy otwieraniu pliku: " + excelFilePath);
+        }
+    }
+
     public ExcelExporter(String excelFilePath, String reportName, String title, String[] headers) {
-        this.excelFilePath = excelFilePath;
-        workbook = new XSSFWorkbook();
-        sheet = workbook.createSheet(reportName);
+
+        System.out.println();
+        OpenFile(excelFilePath);
+        //if (workbook.get)
+       // sheet = workbook.createSheet(reportName);
+        //sheet = workbook.getSheetAt(0);
+
 
         addRow();
         addCell(0, title);
@@ -61,7 +82,7 @@ public class ExcelExporter {
         }
     }
 
-    public void saveToFile() {
+    public void saveToFile(String excelFilePath) {
         try {
             FileOutputStream fileOut = new FileOutputStream(excelFilePath);
             workbook.write(fileOut);
@@ -72,5 +93,3 @@ public class ExcelExporter {
         }
     }
 }
-
-
