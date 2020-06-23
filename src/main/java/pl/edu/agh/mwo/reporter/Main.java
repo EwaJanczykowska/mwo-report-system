@@ -37,7 +37,7 @@ public class Main {
             String rType = cmd.getOptionValue("rtype");
 
             ReaderExcelFiles f = new ReaderExcelFiles();
-            ArrayList<Path> allFiles = f.getAllFiles(directory,OUTPUT_FILE);
+            ArrayList<Path> allFiles = f.getAllFiles(directory);
 
             DataLoader dataLoader = new DataLoader();
             Company company = dataLoader.loadData(allFiles);
