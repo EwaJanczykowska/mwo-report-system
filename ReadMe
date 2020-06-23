@@ -39,9 +39,10 @@ This filters data from beginning to specified date
 
 -----------------------------------------------------------------------------
 
--export
+-export <path\filename.xlsx>
 
-This option generates Excel file with selected report
+This option generates Excel file with selected report, to provided path
+with provided file name
 
 -----------------------------------------------------------------------------
 
