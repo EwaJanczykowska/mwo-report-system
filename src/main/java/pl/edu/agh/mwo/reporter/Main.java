@@ -21,7 +21,8 @@ public class Main {
 
     //final static String OUTPUT_PATH = "resources\\Reports.xlsx"; //win
    // final static String OUTPUT_PATH = "resources/Reports.xlsx"; //mac
-    final static String OUTPUT_PATH = "resources" + File.separator + "Reports.xls"; //mac i ?win
+    final static String OUTPUT_FILE = "Reports.xls";
+    final static String OUTPUT_PATH = "resources" + File.separator + OUTPUT_FILE; //mac i ?win
 
     public static void main(String[] args) throws IOException, ParseException {
 
@@ -38,7 +39,7 @@ public class Main {
             String rType = cmd.getOptionValue("rtype");
 
             ReaderExcelFiles f = new ReaderExcelFiles();
-            ArrayList<Path> allFiles = f.getAllFiles(directory);
+            ArrayList<Path> allFiles = f.getAllFiles(directory,OUTPUT_FILE);
 
             DataLoader dataLoader = new DataLoader();
             Company company = dataLoader.loadData(allFiles);
