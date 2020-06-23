@@ -22,7 +22,7 @@ public class Main {
     //final static String OUTPUT_PATH = "resources\\Reports.xlsx"; //win
    // final static String OUTPUT_PATH = "resources/Reports.xlsx"; //mac
     final static String OUTPUT_PATH = "resources" + File.separator + "Reports.xls"; //mac i ?win
-   // File f = new File("resources" + File.separator() + "Reports.xlsx");
+
     public static void main(String[] args) throws IOException, ParseException {
 
         CommandLineParser parser = new DefaultParser();

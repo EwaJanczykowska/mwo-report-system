@@ -14,7 +14,7 @@ public class ReaderExcelFiles {
     public ArrayList<Path> getAllFiles(String path) {
         ArrayList<Path> filesPaths = new ArrayList<Path>();
         try {
-            Files.walk(Paths.get(path)).filter(Files::isRegularFile).filter(p -> p.toString().endsWith(".xls"))
+            Files.walk(Paths.get(path)).filter(Files::isRegularFile).filter(p -> p.toString().endsWith(".xls") && !p.toString().contains("Reports.xls"))
                     .forEach(filesPaths::add);
         } catch (IOException e) {
 
