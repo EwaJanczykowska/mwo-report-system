@@ -11,10 +11,10 @@ import java.util.ArrayList;
 public class ReaderExcelFiles {
 
     // pobierz dane
-    public ArrayList<Path> getAllFiles(String path) {
+    public ArrayList<Path> getAllFiles(String path, String excludedFile) {
         ArrayList<Path> filesPaths = new ArrayList<Path>();
         try {
-            Files.walk(Paths.get(path)).filter(Files::isRegularFile).filter(p -> p.toString().endsWith(".xls") && !p.toString().contains("Reports.xls"))
+            Files.walk(Paths.get(path)).filter(Files::isRegularFile).filter(p -> p.toString().endsWith(".xls") && !p.toString().contains(excludedFile))
                     .forEach(filesPaths::add);
         } catch (IOException e) {
 
