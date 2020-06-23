@@ -23,10 +23,11 @@ public class ExcelExporter {
 
     private Row lastRow;
 
-    public ExcelExporter(String excelFilePath, String reportName, String title, String[] headers) {
+    private final String exportFilePath;
 
-        System.out.println();
-        openFile(excelFilePath);
+    public ExcelExporter(String exportFilePath, String reportName, String title, String[] headers) {
+        this.exportFilePath = exportFilePath;
+        initializeWorkbook();
         addRow();
         addCell(0, title);
 
@@ -38,12 +39,12 @@ public class ExcelExporter {
 
     }
 
-    public void openFile(String excelFilePath) {
+    private void initializeWorkbook() {
         try {
-            File fileOut = new File(excelFilePath);
+            File fileOut = new File(exportFilePath);
 
             if (fileOut.exists()) {
-                FileInputStream fileInputStream = new FileInputStream(excelFilePath);
+                FileInputStream fileInputStream = new FileInputStream(exportFilePath);
                 workbook = new HSSFWorkbook(new FileInputStream(fileOut));
                 sheet = workbook.getSheetAt(0);
                 fileInputStream.close();
@@ -54,8 +55,7 @@ public class ExcelExporter {
 
             }
         } catch (EncryptedDocumentException | IOException e) {
-            System.out.println("Błąd przy otwieraniu pliku: " + excelFilePath);
-
+            System.out.println("Błąd przy otwieraniu pliku: " + exportFilePath);
         }
     }
 
@@ -83,14 +83,14 @@ public class ExcelExporter {
         }
     }
 
-    public void saveToFile(String excelFilePath) {
+    public void saveToFile() {
         try {
-            FileOutputStream fileOut = new FileOutputStream(excelFilePath);
+            FileOutputStream fileOut = new FileOutputStream(exportFilePath);
             workbook.write(fileOut);
             fileOut.flush();
             fileOut.close();
         } catch (EncryptedDocumentException | IOException e) {
-            System.out.println("Błąd przy zapisywaniu pliku: " + excelFilePath);
+            System.out.println("Błąd przy zapisywaniu pliku: " + exportFilePath);
         }
     }
 }
