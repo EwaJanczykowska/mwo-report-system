@@ -29,6 +29,14 @@ This can be either catalog with several excel files or with just one
 
 This filters data in specified range of time
 
+-datefilter <yyyy/mm/dd->
+
+This filters data from specified date till now
+
+-datefilter <-yyyy/mm/dd>
+
+This filters data from beginning to specified date
+
 -----------------------------------------------------------------------------
 
 -export
