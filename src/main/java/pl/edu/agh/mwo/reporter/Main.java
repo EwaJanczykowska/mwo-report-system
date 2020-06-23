@@ -37,88 +37,45 @@ public class Main {
             CommandLine cmd = parser.parse(options, args);
             String directory = cmd.getOptionValue("source");
             String rType = cmd.getOptionValue("rtype");
+            String datefilter = cmd.getOptionValue("datefilter");
+
             LocalDate dateFrom = null;
             LocalDate dateTo = null;
-            boolean dateFilterFromBeginning = false;
-            boolean dateFilterFromDate = false;
-            boolean dateFilterBetween = false;
             boolean isWrongFormat = false;
-            String datefilter = cmd.getOptionValue("datefilter");
-            String datefiltercheck = datefilter.replaceAll("[0-9]", "x");
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/MM/dd");
-            formatter = formatter.withLocale(Locale.ENGLISH);
-
-            if (datefiltercheck.equals("xxxx/xx/xx-xxxx/xx/xx")) {
-                String[] twoDates = datefilter.split("-");
-                dateFrom = LocalDate.parse(twoDates[0], formatter);
-                dateTo = LocalDate.parse(twoDates[1], formatter);
-                dateFilterBetween = true;
-            } else if (datefiltercheck.equals("-xxxx/xx/xx")) {
-                String dateToString = datefilter.replace("-", "");
-                dateTo = LocalDate.parse(dateToString, formatter);
-                dateFilterFromBeginning = true;
-            } else if (datefiltercheck.equals("xxxx/xx/xx-")) {
-                String dateFromString = datefilter.replace("-", "");
-                dateFrom = LocalDate.parse(dateFromString, formatter);
-                dateTo = LocalDate.now();
-                dateFilterFromDate = true;
-            } else {
-                System.out.println("Wrong date format provided, report will not be generated");
-                isWrongFormat = true;
+            if (datefilter != null) {
+                LocalDate[] receivedDates = dateFilter(datefilter);
+                dateFrom = receivedDates[0];
+                dateTo = receivedDates[1];
+                if (dateFrom == null) {
+                    isWrongFormat = true;
+                }
             }
 
             ReaderExcelFiles f = new ReaderExcelFiles();
             ArrayList<Path> allFiles = f.getAllFiles(directory);
             DataLoader dataLoader = new DataLoader();
             Company company = dataLoader.loadData(allFiles);
-
+//            Company company = dataLoader.loadData(allFiles, dateFrom, dateTo);
             IReportGenerator reportGenerator = new ReportGenerator(company);
+
             if (!isWrongFormat) {
                 switch (rType) {
                     case "1":
-                        if (dateFilterBetween) {
-                            System.out.println(dateFrom);
-                            System.out.println(dateTo);
-                            break;
-                        } else if (dateFilterFromBeginning) {
-                            System.out.println(dateTo);
-                            System.out.println(dateFilterFromBeginning);
-                            break;
-                        } else if (dateFilterFromDate) {
-                            System.out.println(dateFrom);
-                            System.out.println(dateTo);
-                            break;
-                        } else {
-                            Report1 report1 = reportGenerator.generateReport1();
-                            IReportPrinter printer = new Report1Printer(report1);
-                            printer.printToConsole();
-                            if (cmd.hasOption("export")) {
-                                printer.printToExcel(OUTPUT_PATH);
-                            }
-                            break;
+                        Report1 report1 = reportGenerator.generateReport1();
+                        IReportPrinter printer = new Report1Printer(report1);
+                        printer.printToConsole();
+                        if (cmd.hasOption("export")) {
+                            printer.printToExcel(OUTPUT_PATH);
                         }
+                        break;
                     case "2":
-                        if (dateFilterBetween) {
-                            System.out.println(dateFrom);
-                            System.out.println(dateTo);
-                            break;
-                        } else if (dateFilterFromBeginning) {
-                            System.out.println(dateTo);
-                            System.out.println(dateFilterFromBeginning);
-                            break;
-                        } else if (dateFilterFromDate) {
-                            System.out.println(dateFrom);
-                            System.out.println(dateTo);
-                            break;
-                        } else {
-                            Report2 report2 = reportGenerator.generateReport2();
-                            IReportPrinter printer2 = new Report2Printer(report2);
-                            printer2.printToConsole();
-                            if (cmd.hasOption("export")) {
-                                printer2.printToExcel(OUTPUT_PATH);
-                            }
-                            break;
+                        Report2 report2 = reportGenerator.generateReport2();
+                        IReportPrinter printer2 = new Report2Printer(report2);
+                        printer2.printToConsole();
+                        if (cmd.hasOption("export")) {
+                            printer2.printToExcel(OUTPUT_PATH);
                         }
+                        break;
                     default:
                         System.out.println("Incorrect report type\nChoose between 1,2,3,4,5");
                 }
@@ -129,6 +86,34 @@ public class Main {
             System.out.println("Wrong dates provided, for example 13 month, 32 day etc.");
         }
 
+    }
+
+    private static LocalDate[] dateFilter(String inputDate) {
+        LocalDate dateFrom;
+        LocalDate dateTo;
+        String datefiltercheck = inputDate.replaceAll("[0-9]", "x");
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/MM/dd");
+        formatter = formatter.withLocale(Locale.ENGLISH);
+
+        if (datefiltercheck.equals("xxxx/xx/xx-xxxx/xx/xx")) {
+            String[] twoDates = inputDate.split("-");
+            dateFrom = LocalDate.parse(twoDates[0], formatter);
+            dateTo = LocalDate.parse(twoDates[1], formatter);
+        } else if (datefiltercheck.equals("-xxxx/xx/xx")) {
+            String dateToString = inputDate.replace("-", "");
+            dateTo = LocalDate.parse(dateToString, formatter);
+            String dateFromString = "1900/01/01";
+            dateFrom = LocalDate.parse(dateFromString, formatter);
+        } else if (datefiltercheck.equals("xxxx/xx/xx-")) {
+            String dateFromString = inputDate.replace("-", "");
+            dateFrom = LocalDate.parse(dateFromString, formatter);
+            dateTo = LocalDate.now();
+        } else {
+            System.out.println("Wrong date format provided, report will not be generated");
+            dateTo = null;
+            dateFrom = null;
+        }
+        return new LocalDate[]{dateFrom, dateTo};
     }
 
 }
