@@ -17,8 +17,10 @@ import java.util.List;
 
 public class DataLoader {
 
-    public Company loadData(List<Path> paths) throws IOException {
+    public Company loadData(List<Path> paths, String filterByEmployee) throws IOException {
         Company company = new Company();
+        Person filterPerson = null;
+
 
         for (Path path : paths) {
             File file = path.toFile();
@@ -27,14 +29,26 @@ public class DataLoader {
             String fileName = file.getName();
             String personName = fileName.replace(".xls", "").replace("_", " ");
 
-            List<Task> tasks = readPersonTasks(workbook);
 
-            Person person = company.getPersonByName(personName);
-            if (person == null) {
-                person = new Person(personName);
-                company.addPerson(person);
+            List<Task> tasks = readPersonTasks(workbook);
+            if (filterByEmployee == null) {
+                Person person = company.getPersonByName(personName);
+                if (person == null) {
+                    person = new Person(personName);
+                    company.addPerson(person);
+                }
+                person.addTasks(tasks);
+            } else {
+                filterByEmployee = filterByEmployee.replace("_", " ");
+                if (personName.toLowerCase().contains(filterByEmployee)) {
+                    if (filterPerson == null) {
+                        filterPerson = new Person(personName);
+                        company.addPerson(filterPerson);
+                    }
+                    filterPerson.addTasks(tasks);
+                }
+
             }
-            person.addTasks(tasks);
         }
 
         return company;

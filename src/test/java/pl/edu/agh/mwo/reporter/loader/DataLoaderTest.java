@@ -18,7 +18,9 @@ public class DataLoaderTest {
 
         List<Path> paths = Arrays.asList(Paths.get("resources/2012/01/Kowalski_Jan.xls"), Paths.get("resources/2012/01/Nowak_Piotr.xls"));
 
-        Company company = dataLoader.loadData(paths);
+        String filterbyName = "Kowalski Jan";
+
+        Company company = dataLoader.loadData(paths, filterbyName);
 
         Assert.assertNotNull(company);
         List<Person> persons = company.getPersons();
