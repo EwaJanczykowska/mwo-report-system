@@ -69,9 +69,9 @@ public class Main {
                 ReaderExcelFiles f = new ReaderExcelFiles();
                 ArrayList<Path> allFiles = f.getAllFiles(directory);
                 DataLoader dataLoader = new DataLoader();
-              //  Company company = dataLoader.loadData(allFiles);
-                Company company = dataLoader.loadData(allFiles, employee);
-//            Company company = dataLoader.loadData(allFiles, dateFrom, dateTo, employee);
+
+                Company company = dataLoader.loadData(allFiles, dateFrom, dateTo, employee);
+
                 IReportGenerator reportGenerator = new ReportGenerator(company);
                 switch (rType) {
                     case "1":
