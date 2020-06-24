@@ -16,12 +16,15 @@ public class Report1Printer implements IReportPrinter {
     }
 
     public void printToConsole() {
-        System.out.printf("%-40s %-15s\n", HEADERS[0], HEADERS[1]);
+        System.out.println("\nRAPORT  1. Lista godzin w projektach na pracownika.");
+        System.out.println("--------------------------------------------------------------");
+        System.out.printf("|  %-40s | %-15s|\n", HEADERS[0], HEADERS[1]);
+        System.out.println("--------------------------------------------------------------");
 
         report.getHoursPerPerson().forEach((person, hours) -> {
-            System.out.printf("%-40s %-15s\n", person.getName(), hours);
+            System.out.printf("|  %-40s | %-15s|\n", person.getName(), hours);
         });
-
+        System.out.println("--------------------------------------------------------------");
     }
 
     public void printToExcel(String excelFilePath) {

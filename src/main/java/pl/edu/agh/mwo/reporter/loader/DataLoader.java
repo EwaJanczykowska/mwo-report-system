@@ -9,6 +9,7 @@ import java.io.File;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.nio.file.Path;
+import java.sql.SQLOutput;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.ArrayList;
@@ -19,6 +20,9 @@ public class DataLoader {
 
     public Company loadData(List<Path> paths, LocalDate dateFrom, LocalDate dateTo, String filterByEmployee) throws IOException {
         Company company = new Company();
+
+        System.out.println("RAPORT BŁĘDÓW W PLIKACH XLS");
+        System.out.println("---------------------------------------------------");
 
         for (Path path : paths) {
             File file = path.toFile();
@@ -31,6 +35,7 @@ public class DataLoader {
             if (filterByEmployee != null && !personName.toLowerCase().contains(filterByEmployee)) {
                 continue;
             }
+
 
             List<Task> tasks = readPersonTasks(workbook, dateFrom, dateTo);
 
@@ -53,6 +58,8 @@ public class DataLoader {
     private List<Task> readPersonTasks(Workbook workbook, LocalDate dateFrom, LocalDate dateTo) {
         List<Task> tasks = new ArrayList<>();
 
+
+
         for (Sheet sheet : workbook) {
             String projectName = sheet.getSheetName();
             boolean isError = false;
@@ -61,6 +68,8 @@ public class DataLoader {
                 Row row = sheet.getRow(i);
                 Cell dateCell = row.getCell(0);
                 Date taskDate = null;
+
+
                 try {
                     if (dateCell == null || dateCell.getDateCellValue() == null) {
                         System.out.println("Pusta komorka w: " + (i + 1) + "A");
