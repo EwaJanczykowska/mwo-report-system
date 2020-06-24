@@ -18,7 +18,7 @@ public class DataLoaderTest {
 
         List<Path> paths = Arrays.asList(Paths.get("resources/2012/01/Kowalski_Jan.xls"), Paths.get("resources/2012/01/Nowak_Piotr.xls"));
 
-        Company company = dataLoader.loadData(paths);
+        Company company = dataLoader.loadData(paths, null);
 
         Assert.assertNotNull(company);
         List<Person> persons = company.getPersons();
@@ -35,4 +35,5 @@ public class DataLoaderTest {
 
         System.out.println(company);
     }
+
 }

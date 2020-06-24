@@ -17,8 +17,10 @@ import java.util.List;
 
 public class DataLoader {
 
-    public Company loadData(List<Path> paths) throws IOException {
+    public Company loadData(List<Path> paths, String filterByEmployee) throws IOException {
         Company company = new Company();
+        Person filterPerson = null;
+
 
         for (Path path : paths) {
             File file = path.toFile();
@@ -26,9 +28,13 @@ public class DataLoader {
 
             String fileName = file.getName();
             String personName = fileName.replace(".xls", "").replace("_", " ");
+            filterByEmployee = (filterByEmployee==null)? filterByEmployee:filterByEmployee.replace("_", " ");
+
+            if (filterByEmployee != null && !personName.toLowerCase().contains(filterByEmployee)) {
+                continue;
+            }
 
             List<Task> tasks = readPersonTasks(workbook);
-
             Person person = company.getPersonByName(personName);
             if (person == null) {
                 person = new Person(personName);

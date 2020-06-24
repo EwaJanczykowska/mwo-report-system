@@ -30,7 +30,7 @@ public class Main {
         options.addOption("rtype", true, "report type");
         options.addOption("export", true, "export report to excel");
         options.addOption("datefilter", true, "date filter");
-        options.addOption("employeefilter", true, "employee name filter");
+        options.addOption("employeefilter", true, "employee name filter"); //-employeefilter Kowalski_Jan
         try {
             CommandLine cmd = parser.parse(options, args);
             String directory = cmd.getOptionValue("source");
@@ -69,7 +69,8 @@ public class Main {
                 ReaderExcelFiles f = new ReaderExcelFiles();
                 ArrayList<Path> allFiles = f.getAllFiles(directory);
                 DataLoader dataLoader = new DataLoader();
-                Company company = dataLoader.loadData(allFiles);
+              //  Company company = dataLoader.loadData(allFiles);
+                Company company = dataLoader.loadData(allFiles, employee);
 //            Company company = dataLoader.loadData(allFiles, dateFrom, dateTo, employee);
                 IReportGenerator reportGenerator = new ReportGenerator(company);
                 switch (rType) {
