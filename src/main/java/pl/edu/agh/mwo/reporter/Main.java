@@ -20,8 +20,10 @@ import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.Locale;
 
-public class Main {
+import static java.lang.System.exit;
 
+public class Main {
+//-source resources -rtype 1 -export results.xls -employeefilter Kowalski_Jan -datefilter 2011/01/01-2019/12/31
     public static void main(String[] args) throws IOException, ParseException {
 
         CommandLineParser parser = new DefaultParser();
@@ -71,6 +73,11 @@ public class Main {
                 DataLoader dataLoader = new DataLoader();
 
                 Company company = dataLoader.loadData(allFiles, dateFrom, dateTo, employee);
+
+                if (company.getPersons().size()<1){
+                    System.out.println("Brak danych dla podanego zakresu.");
+                    exit(0);
+                }
 
                 IReportGenerator reportGenerator = new ReportGenerator(company);
                 switch (rType) {

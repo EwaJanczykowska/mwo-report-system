@@ -33,6 +33,12 @@ public class DataLoader {
             }
 
             List<Task> tasks = readPersonTasks(workbook, dateFrom, dateTo);
+
+            if (tasks.size()<1){
+                continue;
+            }
+
+
             Person person = company.getPersonByName(personName);
             if (person == null) {
                 person = new Person(personName);
