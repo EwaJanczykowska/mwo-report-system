@@ -28,27 +28,19 @@ public class DataLoader {
 
             String fileName = file.getName();
             String personName = fileName.replace(".xls", "").replace("_", " ");
+            filterByEmployee = (filterByEmployee==null)? filterByEmployee:filterByEmployee.replace("_", " ");
 
+            if (filterByEmployee != null && !personName.toLowerCase().contains(filterByEmployee)) {
+                continue;
+            }
 
             List<Task> tasks = readPersonTasks(workbook);
-            if (filterByEmployee == null) {
-                Person person = company.getPersonByName(personName);
-                if (person == null) {
-                    person = new Person(personName);
-                    company.addPerson(person);
-                }
-                person.addTasks(tasks);
-            } else {
-                filterByEmployee = filterByEmployee.replace("_", " ");
-                if (personName.toLowerCase().contains(filterByEmployee)) {
-                    if (filterPerson == null) {
-                        filterPerson = new Person(personName);
-                        company.addPerson(filterPerson);
-                    }
-                    filterPerson.addTasks(tasks);
-                }
-
+            Person person = company.getPersonByName(personName);
+            if (person == null) {
+                person = new Person(personName);
+                company.addPerson(person);
             }
+            person.addTasks(tasks);
         }
 
         return company;
