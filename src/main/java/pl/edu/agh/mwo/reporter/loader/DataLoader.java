@@ -17,10 +17,8 @@ import java.util.List;
 
 public class DataLoader {
 
-    public Company loadData(List<Path> paths, String filterByEmployee) throws IOException {
+    public Company loadData(List<Path> paths, LocalDate dateFrom, LocalDate dateTo, String filterByEmployee) throws IOException {
         Company company = new Company();
-        Person filterPerson = null;
-
 
         for (Path path : paths) {
             File file = path.toFile();
@@ -34,7 +32,7 @@ public class DataLoader {
                 continue;
             }
 
-            List<Task> tasks = readPersonTasks(workbook);
+            List<Task> tasks = readPersonTasks(workbook, dateFrom, dateTo);
             Person person = company.getPersonByName(personName);
             if (person == null) {
                 person = new Person(personName);
@@ -46,7 +44,7 @@ public class DataLoader {
         return company;
     }
 
-    private List<Task> readPersonTasks(Workbook workbook) {
+    private List<Task> readPersonTasks(Workbook workbook, LocalDate dateFrom, LocalDate dateTo) {
         List<Task> tasks = new ArrayList<>();
 
         for (Sheet sheet : workbook) {
@@ -100,7 +98,17 @@ public class DataLoader {
                     System.out.println("Wiersz " + (i + 1) + " nie uwzgledniony w raporcie");
                     continue;
                 }
-                Task task = new Task(taskName, convertToLocalDate(taskDate), taskHours, projectName);
+
+
+                LocalDate localDate = convertToLocalDate(taskDate);
+                if (dateFrom != null && localDate.isBefore(dateFrom)) {
+                    continue;
+                }
+                if (dateTo != null && localDate.isAfter(dateTo)) {
+                    continue;
+                }
+
+                Task task = new Task(taskName, localDate, taskHours, projectName);
                 tasks.add(task);
             }
 

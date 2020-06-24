@@ -7,6 +7,7 @@ import pl.edu.agh.mwo.reporter.model.Person;
 
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.List;
 
@@ -18,7 +19,7 @@ public class DataLoaderTest {
 
         List<Path> paths = Arrays.asList(Paths.get("resources/2012/01/Kowalski_Jan.xls"), Paths.get("resources/2012/01/Nowak_Piotr.xls"));
 
-        Company company = dataLoader.loadData(paths, null);
+        Company company = dataLoader.loadData(paths, LocalDate.of(2012, 1, 15), LocalDate.of(2012, 1, 20), null);
 
         Assert.assertNotNull(company);
         List<Person> persons = company.getPersons();
@@ -27,11 +28,11 @@ public class DataLoaderTest {
 
         Person person0 = persons.get(0);
         Assert.assertEquals("Kowalski Jan", person0.getName());
-        Assert.assertEquals(11, person0.getTasks().size());
+        Assert.assertEquals(5, person0.getTasks().size());
 
         Person person1 = persons.get(1);
         Assert.assertEquals("Nowak Piotr", person1.getName());
-        Assert.assertEquals(10, person1.getTasks().size());
+        Assert.assertEquals(1, person1.getTasks().size());
 
         System.out.println(company);
     }
