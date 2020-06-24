@@ -7,10 +7,7 @@ import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
+import java.io.*;
 import java.math.BigDecimal;
 
 public class ExcelExporter {
@@ -41,21 +38,12 @@ public class ExcelExporter {
 
     private void initializeWorkbook() {
         try {
-            File fileOut = new File(exportFilePath);
-
-            if (fileOut.exists()) {
-                FileInputStream fileInputStream = new FileInputStream(exportFilePath);
-                workbook = new HSSFWorkbook(new FileInputStream(fileOut));
-                sheet = workbook.getSheetAt(0);
-                fileInputStream.close();
-
-            } else {
-                workbook = new HSSFWorkbook();
-                sheet = workbook.createSheet("Report");
-
-            }
-        } catch (EncryptedDocumentException | IOException e) {
-            System.out.println("Błąd przy otwieraniu pliku: " + exportFilePath);
+            InputStream templateInputStream = this.getClass().getResourceAsStream("/template.xls");
+            workbook = new HSSFWorkbook(templateInputStream);
+            sheet = workbook.getSheetAt(0);
+            templateInputStream.close();
+        } catch (IOException e) {
+            System.out.println("Błąd przy otwieraniu szablonu");
         }
     }
 
