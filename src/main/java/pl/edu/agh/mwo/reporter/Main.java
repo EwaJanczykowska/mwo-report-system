@@ -28,10 +28,10 @@ public class Main {
 
         CommandLineParser parser = new DefaultParser();
         Options options = new Options();
-        options.addOption("source", true, "source of data files");
-        options.addOption("rtype", true, "report type");
-        options.addOption("export", true, "export report to excel");
-        options.addOption("datefilter", true, "date filter");
+        options.addOption("source", true, "source of data files");//-source resources
+        options.addOption("rtype", true, "report type"); //-rtype 1
+        options.addOption("export", true, "export report to excel"); //-export results.xls
+        options.addOption("datefilter", true, "date filter"); //-datefilter 2011/01/01-2019/12/31
         options.addOption("employeefilter", true, "employee name filter"); //-employeefilter Kowalski_Jan
         try {
             CommandLine cmd = parser.parse(options, args);
