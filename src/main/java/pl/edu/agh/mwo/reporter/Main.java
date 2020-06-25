@@ -83,7 +83,7 @@ public class Main {
                     exit(0);
                 }
 
-                IReportGenerator reportGenerator = new ReportGenerator(company, employee, dateFrom, dateTo);
+                IReportGenerator reportGenerator = new ReportGenerator(company, employeeFilter, dateFrom, dateTo);
                 switch (rType) {
                     case "1":
                         Report1 report1 = reportGenerator.generateReport1();

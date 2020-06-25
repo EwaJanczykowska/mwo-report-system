@@ -20,7 +20,11 @@ public class Report1Printer implements IReportPrinter {
 
     public void printToConsole() {
         System.out.println("\n");
-        System.out.println(report.getTitle());
+        if (report.getEmployeeName() !=null){
+            System.out.println("Raport godzin projektowych dla: " +report.getEmployeeName());
+        } else {
+            System.out.println(report.getTitle());
+        }
         if (report.getDateFrom() !=null) {
             System.out.println("Dane od: " + report.getDateFrom() + " do: "+report.getDateTo());
         }
@@ -35,7 +39,9 @@ public class Report1Printer implements IReportPrinter {
     }
 
     public void printToExcel(String excelFilePath) {
-        ExcelExporter excelExporter = new ExcelExporter(excelFilePath, "report1", report.getTitle(), HEADERS);
+        ExcelExporter excelExporter = new ExcelExporter(excelFilePath, "report1", report.getTitle(),
+                HEADERS, report.getEmployeeName(), report.getDateFrom(), report.getDateTo());
+
         excelExporter.setColumnsWidths(COLUMNS_WIDTHS);
 
         for (Person person : report.getPersons()) {

@@ -38,7 +38,12 @@ public class Report2Printer implements IReportPrinter {
     }
 
     public void printToExcel(String excelFilePath) {
-        ExcelExporter excelExporter = new ExcelExporter(excelFilePath, "report2", report.getTitle(), HEADERS);
+        ExcelExporter excelExporter = new ExcelExporter(excelFilePath, "report2",
+                report.getTitle(),
+                HEADERS,
+                report.getEmployeeName(),
+                report.getDateFrom(),
+                report.getDateTo());
         excelExporter.setColumnsWidths(COLUMNS_WIDTHS);
 
         for (Map.Entry<String, BigDecimal> entry : report.getHoursPerProject().entrySet()) {
