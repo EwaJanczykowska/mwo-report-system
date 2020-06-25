@@ -112,7 +112,7 @@ public class Main {
                     return;
                 }
 
-                IReportGenerator reportGenerator = new ReportGenerator(company, employeeFilter, dateFrom, dateTo, keywordFilter);
+                IReportGenerator reportGenerator = new ReportGenerator(company, employeeFilter, dateFrom, dateTo, task);
                 switch (rType) {
                     case "1":
                         Report1 report1 = reportGenerator.generateReport1();
