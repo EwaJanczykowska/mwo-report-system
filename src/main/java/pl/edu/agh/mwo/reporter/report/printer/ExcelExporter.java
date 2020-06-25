@@ -77,6 +77,7 @@ public class ExcelExporter {
             workbook.write(fileOut);
             fileOut.flush();
             fileOut.close();
+            System.out.println("Exportowano raport do pliku: " + exportFilePath);
         } catch (EncryptedDocumentException | IOException e) {
             System.out.println("Błąd przy zapisywaniu pliku: " + exportFilePath);
         }
