@@ -1,7 +1,10 @@
 package pl.edu.agh.mwo.reporter.report.printer;
 
+import org.openxmlformats.schemas.spreadsheetml.x2006.main.STSourceType;
 import pl.edu.agh.mwo.reporter.model.Person;
 import pl.edu.agh.mwo.reporter.model.report.Report1;
+
+import java.sql.SQLOutput;
 
 public class Report1Printer implements IReportPrinter {
 
@@ -16,7 +19,11 @@ public class Report1Printer implements IReportPrinter {
     }
 
     public void printToConsole() {
-        System.out.println("\nRAPORT  1. Lista godzin w projektach na pracownika.");
+        System.out.println("\n");
+        System.out.println(report.getTitle());
+        if (report.getDateFrom() !=null) {
+            System.out.println("Dane od: " + report.getDateFrom() + " do: "+report.getDateTo());
+        }
         System.out.println("--------------------------------------------------------------");
         System.out.printf("|  %-40s | %-15s|\n", HEADERS[0], HEADERS[1]);
         System.out.println("--------------------------------------------------------------");
@@ -28,7 +35,7 @@ public class Report1Printer implements IReportPrinter {
     }
 
     public void printToExcel(String excelFilePath) {
-        ExcelExporter excelExporter = new ExcelExporter(excelFilePath, "report1", report.getDescription(), HEADERS);
+        ExcelExporter excelExporter = new ExcelExporter(excelFilePath, "report1", report.getTitle(), HEADERS);
         excelExporter.setColumnsWidths(COLUMNS_WIDTHS);
 
         for (Person person : report.getPersons()) {

@@ -1,19 +1,43 @@
 package pl.edu.agh.mwo.reporter.model.report;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.Map;
 
 public class Report2 {
-    private final String description = "Raport liczby godzin poswieconych na projekty";
+    private final String title = "Raport godzin poswięconych na poszczególne projekty";
     private final Map<String, BigDecimal> hoursPerProject;
+    private String employeeName;
+    private LocalDate dateFrom;
+    private LocalDate dateTo;
 
-    public Report2() {
+//    public Report2() {
+//        this.hoursPerProject = new HashMap<>();
+//    }
+
+
+    public Report2(String employeeName, LocalDate dateFrom, LocalDate dateTo) {
         this.hoursPerProject = new HashMap<>();
+        this.employeeName = employeeName;
+        this.dateFrom = dateFrom;
+        this.dateTo = dateTo;
     }
 
-    public String getDescription() {
-        return description;
+    public String getTitle() {
+        return title;
+    }
+
+    public String getEmployeeName() {
+        return employeeName;
+    }
+
+    public LocalDate getDateFrom() {
+        return dateFrom;
+    }
+
+    public LocalDate getDateTo() {
+        return dateTo;
     }
 
     public Map<String, BigDecimal> getHoursPerProject() {

@@ -22,7 +22,7 @@ public class DataLoader {
         Company company = new Company();
 
         System.out.println("RAPORT BŁĘDÓW W PLIKACH XLS");
-        System.out.println("---------------------------------------------------");
+        System.out.println("--------------------------------------------------------------------------");
 
         for (Path path : paths) {
             File file = path.toFile();
