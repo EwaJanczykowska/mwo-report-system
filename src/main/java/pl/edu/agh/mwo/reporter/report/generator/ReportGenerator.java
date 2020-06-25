@@ -7,19 +7,31 @@ import pl.edu.agh.mwo.reporter.model.report.Report1;
 import pl.edu.agh.mwo.reporter.model.report.Report2;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Set;
 
 public class ReportGenerator implements IReportGenerator {
 
     private final Company company;
+    private String employeeName;
+    private LocalDate dateFrom;
+    private LocalDate dateTo;
 
-    public ReportGenerator(Company company) {
+//    public ReportGenerator(Company company) {
+//        this.company = company;
+//    }
+
+
+    public ReportGenerator(Company company, String employeeName, LocalDate dateFrom, LocalDate dateTo) {
         this.company = company;
+        this.employeeName = employeeName;
+        this.dateFrom = dateFrom;
+        this.dateTo = dateTo;
     }
 
     public Report1 generateReport1() {
-        Report1 report1 = new Report1();
+        Report1 report1 = new Report1(employeeName,dateFrom, dateTo);
         for (Person person : company.getPersons()) {
             BigDecimal hours = BigDecimal.ZERO;
             for (Task task : person.getTasks()) {
@@ -31,7 +43,7 @@ public class ReportGenerator implements IReportGenerator {
     }
 
     public Report2 generateReport2() {
-        Report2 report2 = new Report2();
+        Report2 report2 = new Report2(employeeName,dateFrom, dateTo);
         final Set<String> projectNames = new HashSet<>();
         company.getPersons().forEach(person -> person.getTasks().forEach(task -> projectNames.add(task.getProjectName())));
 

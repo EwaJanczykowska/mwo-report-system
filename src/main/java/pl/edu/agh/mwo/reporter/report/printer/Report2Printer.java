@@ -20,16 +20,30 @@ public class Report2Printer implements IReportPrinter {
     }
 
     public void printToConsole() {
-        System.out.printf("%-40s %-15s\n", HEADERS[0], HEADERS[1]);
+        System.out.println("\n");
+        System.out.println(report.getTitle());
+        if (report.getDateFrom() !=null) {
+            System.out.println("Dane od: " + report.getDateFrom() + " do: "+report.getDateTo());
+        }
+        System.out.println("--------------------------------------------------------------");
+        System.out.printf("|  %-40s | %-15s|\n", HEADERS[0], HEADERS[1]);
+        System.out.println("--------------------------------------------------------------");
+
 
         report.getHoursPerProject().forEach((projectName, hours) -> {
-            System.out.printf("%-40s %-15s\n", projectName, hours);
+            System.out.printf("|  %-40s | %-15s|\n", projectName, hours);
         });
+        System.out.println("--------------------------------------------------------------");
 
     }
 
     public void printToExcel(String excelFilePath) {
-        ExcelExporter excelExporter = new ExcelExporter(excelFilePath, "report2", report.getDescription(), HEADERS);
+        ExcelExporter excelExporter = new ExcelExporter(excelFilePath, "report2",
+                report.getTitle(),
+                HEADERS,
+                report.getEmployeeName(),
+                report.getDateFrom(),
+                report.getDateTo());
         excelExporter.setColumnsWidths(COLUMNS_WIDTHS);
 
         for (Map.Entry<String, BigDecimal> entry : report.getHoursPerProject().entrySet()) {

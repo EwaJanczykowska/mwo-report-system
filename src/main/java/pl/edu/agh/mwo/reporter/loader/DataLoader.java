@@ -26,13 +26,19 @@ public class DataLoader {
 
             String fileName = file.getName();
             String personName = fileName.replace(".xls", "").replace("_", " ");
-            filterByEmployee = (filterByEmployee==null)? filterByEmployee:filterByEmployee.replace("_", " ");
+            filterByEmployee = (filterByEmployee == null) ? filterByEmployee : filterByEmployee.replace("_", " ");
 
             if (filterByEmployee != null && !personName.toLowerCase().contains(filterByEmployee)) {
                 continue;
             }
 
-            List<Task> tasks = readPersonTasks(workbook, dateFrom, dateTo);
+            List<Task> tasks = readPersonTasks(path, workbook, dateFrom, dateTo);
+
+            if (tasks.size() < 1) {
+                continue;
+            }
+
+
             Person person = company.getPersonByName(personName);
             if (person == null) {
                 person = new Person(personName);
@@ -44,7 +50,7 @@ public class DataLoader {
         return company;
     }
 
-    private List<Task> readPersonTasks(Workbook workbook, LocalDate dateFrom, LocalDate dateTo) {
+    private List<Task> readPersonTasks(Path path, Workbook workbook, LocalDate dateFrom, LocalDate dateTo) {
         List<Task> tasks = new ArrayList<>();
 
         for (Sheet sheet : workbook) {
@@ -55,15 +61,17 @@ public class DataLoader {
                 Row row = sheet.getRow(i);
                 Cell dateCell = row.getCell(0);
                 Date taskDate = null;
+
+
                 try {
                     if (dateCell == null || dateCell.getDateCellValue() == null) {
-                        System.out.println("Pusta komorka w: " + (i + 1) + "A");
+                        System.out.println("Pusta komorka w: " + (i + 1) + "A (skoroszyt:" + projectName+") w pliku: " + path);
                         isError = true;
                     } else {
                         taskDate = dateCell.getDateCellValue();
                     }
                 } catch (IllegalStateException e) {
-                    System.out.println("Nieprawidlowa data w komorce :" + (i + 1) + "A");
+                    System.out.println("Nieprawidlowa data w komorce :" + (i + 1) + "A (skoroszyt:" + projectName+") w pliku: " + path);
                     isError = true;
                 }
 
@@ -71,26 +79,26 @@ public class DataLoader {
                 String taskName = "";
                 try {
                     if (taskCell == null || taskCell.getStringCellValue() == null) {
-                        System.out.println("Pusta komorka w: " + (i + 1) + "B");
+                        System.out.println("Pusta komorka w: " + (i + 1) + "B (skoroszyt:" + projectName+") w pliku: " + path);
                         isError = true;
                     } else {
                         taskName = taskCell.getStringCellValue();
                     }
                 } catch (IllegalStateException e) {
-                    System.out.println("Komorka " + (i + 1) + "B" + " nie zawiera prawdidlowej wartosci tekstowej");
+                    System.out.println("Komorka " + (i + 1) + "B (skoroszyt:" + projectName + ") nie zawiera prawdidlowej wartosci tekstowej w pliku: " + path);
                     isError = true;
                 }
 
                 Cell hoursCell = row.getCell(2);
                 BigDecimal taskHours = BigDecimal.ZERO;
                 if (hoursCell == null) {
-                    System.out.println("Pusta komorka w: " + (i + 1) + "C");
+                    System.out.println("Pusta komorka w: " + (i + 1) + "C (skoroszyt:" + sheet.getSheetName()+") w pliku: " + path);
                     isError = true;
                 } else {
                     try {
                         taskHours = BigDecimal.valueOf(hoursCell.getNumericCellValue());
                     } catch (IllegalStateException e) {
-                        System.out.println("Wartosc nienumeryczna w komorce : " + (i + 1) + "C");
+                        System.out.println("Wartosc nienumeryczna w komorce : " + (i + 1) + "C (skoroszyt:" + sheet.getSheetName()+") w pliku: " + path);
                         isError = true;
                     }
                 }

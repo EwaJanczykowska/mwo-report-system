@@ -7,26 +7,42 @@ import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 
-import java.io.*;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.math.BigDecimal;
+import java.time.LocalDate;
 
 public class ExcelExporter {
 
-    private HSSFWorkbook workbook;
-
-    private HSSFSheet sheet;
-
-    private int rowsCount;
-
-    private Row lastRow;
-
     private final String exportFilePath;
+    private HSSFWorkbook workbook;
+    private HSSFSheet sheet;
+    private int rowsCount;
+    private Row lastRow;
+    private String employeeName;
+    private LocalDate dateFrom;
+    private LocalDate dateTo;
 
-    public ExcelExporter(String exportFilePath, String reportName, String title, String[] headers) {
+    public ExcelExporter(String exportFilePath, String reportName, String title, String[] headers,
+                         String employeeName, LocalDate dateFrom, LocalDate dateTo) {
         this.exportFilePath = exportFilePath;
+        this.employeeName = employeeName;
+        this.dateFrom = dateFrom;
+        this.dateTo = dateTo;
+
         initializeWorkbook();
         addRow();
-        addCell(0, title);
+        if (getEmployeeName() != null) {
+            addCell(0, "Raport godzin projektowych dla: " + getEmployeeName());
+        } else {
+            addCell(0, title);
+        }
+
+        addRow();
+        if (getDateFrom() != null) {
+            addCell(0, "Dane od: " + getDateFrom() + " do: " + getDateTo());
+        }
 
         addRow();
         addRow();
@@ -34,6 +50,18 @@ public class ExcelExporter {
             addCell(i, headers[i]);
         }
 
+    }
+
+    public String getEmployeeName() {
+        return employeeName;
+    }
+
+    public LocalDate getDateFrom() {
+        return dateFrom;
+    }
+
+    public LocalDate getDateTo() {
+        return dateTo;
     }
 
     private void initializeWorkbook() {
@@ -77,6 +105,7 @@ public class ExcelExporter {
             workbook.write(fileOut);
             fileOut.flush();
             fileOut.close();
+            System.out.println("Exportowano raport do pliku: " + exportFilePath);
         } catch (EncryptedDocumentException | IOException e) {
             System.out.println("Błąd przy zapisywaniu pliku: " + exportFilePath);
         }

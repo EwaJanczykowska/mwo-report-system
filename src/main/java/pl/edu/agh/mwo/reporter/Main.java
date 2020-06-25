@@ -21,15 +21,15 @@ import java.util.ArrayList;
 import java.util.Locale;
 
 public class Main {
-
+    //-source resources -rtype 1 -export results.xls -employeefilter Kowalski_Jan -datefilter 2011/01/01-2019/12/31
     public static void main(String[] args) throws IOException, ParseException {
 
         CommandLineParser parser = new DefaultParser();
         Options options = new Options();
-        options.addOption("source", true, "source of data files");
-        options.addOption("rtype", true, "report type");
-        options.addOption("export", true, "export report to excel");
-        options.addOption("datefilter", true, "date filter");
+        options.addOption("source", true, "source of data files");//-source resources
+        options.addOption("rtype", true, "report type"); //-rtype 1
+        options.addOption("export", true, "export report to excel"); //-export results.xls
+        options.addOption("datefilter", true, "date filter"); //-datefilter 2011/01/01-2019/12/31
         options.addOption("employeefilter", true, "employee name filter"); //-employeefilter Kowalski_Jan
         try {
             CommandLine cmd = parser.parse(options, args);
@@ -48,17 +48,22 @@ public class Main {
             if (!cmd.hasOption("source")) {
                 isError = true;
                 System.out.println("No source specified\nUse -source <path> to specify");
-            } else if (!cmd.hasOption("rtype")) {
+            }
+            if(!cmd.hasOption("rtype")) {
                 isError = true;
                 System.out.println("No report type specified\nUse -rtype <numbers 1 to 5> to specify");
-            } else if (dateFilter != null) {
+            }
+
+            if (dateFilter != null) {
                 LocalDate[] receivedDates = dateFilter(dateFilter);
                 dateFrom = receivedDates[0];
                 dateTo = receivedDates[1];
                 if (dateFrom == null) {
                     isError = true;
                 }
-            } else if (employeeFilter != null) {
+            }
+
+            if (employeeFilter != null) {
                 employee = employeeFilter(employeeFilter);
                 if (employee == null) {
                     isError = true;
@@ -72,7 +77,12 @@ public class Main {
 
                 Company company = dataLoader.loadData(allFiles, dateFrom, dateTo, employee);
 
-                IReportGenerator reportGenerator = new ReportGenerator(company);
+                if (company.getPersons().size() < 1) {
+                    System.out.println("Brak danych dla podanego zakresu.");
+                    return;
+                }
+
+                IReportGenerator reportGenerator = new ReportGenerator(company, employeeFilter, dateFrom, dateTo);
                 switch (rType) {
                     case "1":
                         Report1 report1 = reportGenerator.generateReport1();
