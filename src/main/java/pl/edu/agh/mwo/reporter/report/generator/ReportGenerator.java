@@ -6,9 +6,14 @@ import pl.edu.agh.mwo.reporter.model.Task;
 import pl.edu.agh.mwo.reporter.model.report.Report1;
 import pl.edu.agh.mwo.reporter.model.report.Report2;
 import pl.edu.agh.mwo.reporter.model.report.Report3;
+import pl.edu.agh.mwo.reporter.model.report.Report5;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -20,6 +25,12 @@ public class ReportGenerator implements IReportGenerator {
     private LocalDate dateFrom;
     private LocalDate dateTo;
     private List<String> projectNames;
+    private String keyword;
+
+//    public ReportGenerator(Company company) {
+//        this.company = company;
+//    }
+
 
     public ReportGenerator(Company company, String employeeName, LocalDate dateFrom, LocalDate dateTo) {
         this.company = company;
@@ -27,6 +38,14 @@ public class ReportGenerator implements IReportGenerator {
         this.dateFrom = dateFrom;
         this.dateTo = dateTo;
         this.projectNames = findProjectNames(company);
+    }
+
+    public ReportGenerator(Company company, String employeeName, LocalDate dateFrom, LocalDate dateTo, String keyword) {
+        this.company = company;
+        this.employeeName = employeeName;
+        this.dateFrom = dateFrom;
+        this.dateTo = dateTo;
+        this.keyword=keyword;
     }
 
     @Override
@@ -81,5 +100,20 @@ public class ReportGenerator implements IReportGenerator {
                 .map(Task::getProjectName)
                 .distinct()
                 .collect(Collectors.toList());
+    }
+
+    public Report5 generateReport5() {
+        Report5 report5 = new Report5(employeeName,dateFrom, dateTo, keyword);
+       // List<Task> tablicaTask= new ArrayList<>();
+        for (Person person : company.getPersons()) {
+            BigDecimal hours = BigDecimal.ZERO;
+            for (Task task : person.getTasks()) {
+                if (task.getName().contains(keyword)) {
+                    report5.addTask(task);
+                }
+            }
+
+        }
+        return report5;
     }
 }
