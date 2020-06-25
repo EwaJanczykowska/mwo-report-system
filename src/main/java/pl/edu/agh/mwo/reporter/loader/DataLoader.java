@@ -70,13 +70,13 @@ public class DataLoader {
 
                 try {
                     if (dateCell == null || dateCell.getDateCellValue() == null) {
-                        System.out.println("Pusta komorka w: " + (i + 1) + "A w pliku: " + file.toString());
+                        System.out.println("Pusta komorka w: " + (i + 1) + "A (skoroszyt:" + sheet.getSheetName()+") w pliku: " + file.toString());
                         isError = true;
                     } else {
                         taskDate = dateCell.getDateCellValue();
                     }
                 } catch (IllegalStateException e) {
-                    System.out.println("Nieprawidlowa data w komorce :" + (i + 1) + "A w pliku: " + file.toString());
+                    System.out.println("Nieprawidlowa data w komorce :" + (i + 1) + "A (skoroszyt:" + sheet.getSheetName()+") w pliku: " + file.toString());
                     isError = true;
                 }
 
@@ -84,7 +84,7 @@ public class DataLoader {
                 String taskName = "";
                 try {
                     if (taskCell == null || taskCell.getStringCellValue() == null) {
-                        System.out.println("Pusta komorka w: " + (i + 1) + "B w pliku: " + file.toString());
+                        System.out.println("Pusta komorka w: " + (i + 1) + "B (skoroszyt:" + sheet.getSheetName()+") w pliku: " + file.toString());
                         isError = true;
                     } else {
                         taskName = taskCell.getStringCellValue();
@@ -97,13 +97,13 @@ public class DataLoader {
                 Cell hoursCell = row.getCell(2);
                 BigDecimal taskHours = BigDecimal.ZERO;
                 if (hoursCell == null) {
-                    System.out.println("Pusta komorka w: " + (i + 1) + "C w pliku: " + file.toString());
+                    System.out.println("Pusta komorka w: " + (i + 1) + "C (skoroszyt:" + sheet.getSheetName()+") w pliku: " + file.toString());
                     isError = true;
                 } else {
                     try {
                         taskHours = BigDecimal.valueOf(hoursCell.getNumericCellValue());
                     } catch (IllegalStateException e) {
-                        System.out.println("Wartosc nienumeryczna w komorce : " + (i + 1) + "C w pliku: " + file.toString());
+                        System.out.println("Wartosc nienumeryczna w komorce : " + (i + 1) + "C (skoroszyt:" + sheet.getSheetName()+") w pliku: " + file.toString());
                         isError = true;
                     }
                 }
