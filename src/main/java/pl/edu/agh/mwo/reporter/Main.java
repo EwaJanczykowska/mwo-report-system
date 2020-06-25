@@ -20,10 +20,8 @@ import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.Locale;
 
-import static java.lang.System.exit;
-
 public class Main {
-//-source resources -rtype 1 -export results.xls -employeefilter Kowalski_Jan -datefilter 2011/01/01-2019/12/31
+    //-source resources -rtype 1 -export results.xls -employeefilter Kowalski_Jan -datefilter 2011/01/01-2019/12/31
     public static void main(String[] args) throws IOException, ParseException {
 
         CommandLineParser parser = new DefaultParser();
@@ -50,7 +48,8 @@ public class Main {
             if (!cmd.hasOption("source")) {
                 isError = true;
                 System.out.println("No source specified\nUse -source <path> to specify");
-            } else if (!cmd.hasOption("rtype")) {
+            }
+            if(!cmd.hasOption("rtype")) {
                 isError = true;
                 System.out.println("No report type specified\nUse -rtype <numbers 1 to 5> to specify");
             }
@@ -78,9 +77,9 @@ public class Main {
 
                 Company company = dataLoader.loadData(allFiles, dateFrom, dateTo, employee);
 
-                if (company.getPersons().size()<1){
+                if (company.getPersons().size() < 1) {
                     System.out.println("Brak danych dla podanego zakresu.");
-                    exit(0);
+                    return;
                 }
 
                 IReportGenerator reportGenerator = new ReportGenerator(company, employeeFilter, dateFrom, dateTo);

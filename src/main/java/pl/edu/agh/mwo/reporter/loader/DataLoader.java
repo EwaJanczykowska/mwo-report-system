@@ -9,7 +9,6 @@ import java.io.File;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.nio.file.Path;
-import java.sql.SQLOutput;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.ArrayList;
@@ -21,25 +20,21 @@ public class DataLoader {
     public Company loadData(List<Path> paths, LocalDate dateFrom, LocalDate dateTo, String filterByEmployee) throws IOException {
         Company company = new Company();
 
-        System.out.println("RAPORT BŁĘDÓW W PLIKACH XLS");
-        System.out.println("--------------------------------------------------------------------------");
-
         for (Path path : paths) {
             File file = path.toFile();
             Workbook workbook = WorkbookFactory.create(file);
 
             String fileName = file.getName();
             String personName = fileName.replace(".xls", "").replace("_", " ");
-            filterByEmployee = (filterByEmployee==null)? filterByEmployee:filterByEmployee.replace("_", " ");
+            filterByEmployee = (filterByEmployee == null) ? filterByEmployee : filterByEmployee.replace("_", " ");
 
             if (filterByEmployee != null && !personName.toLowerCase().contains(filterByEmployee)) {
                 continue;
             }
 
+            List<Task> tasks = readPersonTasks(path, workbook, dateFrom, dateTo);
 
-            List<Task> tasks = readPersonTasks(file, workbook, dateFrom, dateTo);
-
-            if (tasks.size()<1){
+            if (tasks.size() < 1) {
                 continue;
             }
 
@@ -55,7 +50,7 @@ public class DataLoader {
         return company;
     }
 
-    private List<Task> readPersonTasks(File file, Workbook workbook, LocalDate dateFrom, LocalDate dateTo) {
+    private List<Task> readPersonTasks(Path path, Workbook workbook, LocalDate dateFrom, LocalDate dateTo) {
         List<Task> tasks = new ArrayList<>();
 
         for (Sheet sheet : workbook) {
@@ -70,13 +65,13 @@ public class DataLoader {
 
                 try {
                     if (dateCell == null || dateCell.getDateCellValue() == null) {
-                        System.out.println("Pusta komorka w: " + (i + 1) + "A (skoroszyt:" + projectName+") w pliku: " + file.toString());
+                        System.out.println("Pusta komorka w: " + (i + 1) + "A (skoroszyt:" + projectName+") w pliku: " + path);
                         isError = true;
                     } else {
                         taskDate = dateCell.getDateCellValue();
                     }
                 } catch (IllegalStateException e) {
-                    System.out.println("Nieprawidlowa data w komorce :" + (i + 1) + "A (skoroszyt:" + projectName+") w pliku: " + file.toString());
+                    System.out.println("Nieprawidlowa data w komorce :" + (i + 1) + "A (skoroszyt:" + projectName+") w pliku: " + path);
                     isError = true;
                 }
 
@@ -84,26 +79,26 @@ public class DataLoader {
                 String taskName = "";
                 try {
                     if (taskCell == null || taskCell.getStringCellValue() == null) {
-                        System.out.println("Pusta komorka w: " + (i + 1) + "B (skoroszyt:" + projectName+") w pliku: " + file.toString());
+                        System.out.println("Pusta komorka w: " + (i + 1) + "B (skoroszyt:" + projectName+") w pliku: " + path);
                         isError = true;
                     } else {
                         taskName = taskCell.getStringCellValue();
                     }
                 } catch (IllegalStateException e) {
-                    System.out.println("Komorka " + (i + 1) + "B (skoroszyt:" + projectName + ") nie zawiera prawdidlowej wartosci tekstowej w pliku: " + file.toString());
+                    System.out.println("Komorka " + (i + 1) + "B (skoroszyt:" + projectName + ") nie zawiera prawdidlowej wartosci tekstowej w pliku: " + path);
                     isError = true;
                 }
 
                 Cell hoursCell = row.getCell(2);
                 BigDecimal taskHours = BigDecimal.ZERO;
                 if (hoursCell == null) {
-                    System.out.println("Pusta komorka w: " + (i + 1) + "C (skoroszyt:" + sheet.getSheetName()+") w pliku: " + file.toString());
+                    System.out.println("Pusta komorka w: " + (i + 1) + "C (skoroszyt:" + sheet.getSheetName()+") w pliku: " + path);
                     isError = true;
                 } else {
                     try {
                         taskHours = BigDecimal.valueOf(hoursCell.getNumericCellValue());
                     } catch (IllegalStateException e) {
-                        System.out.println("Wartosc nienumeryczna w komorce : " + (i + 1) + "C (skoroszyt:" + sheet.getSheetName()+") w pliku: " + file.toString());
+                        System.out.println("Wartosc nienumeryczna w komorce : " + (i + 1) + "C (skoroszyt:" + sheet.getSheetName()+") w pliku: " + path);
                         isError = true;
                     }
                 }
