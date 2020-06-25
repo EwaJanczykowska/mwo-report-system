@@ -70,13 +70,13 @@ public class DataLoader {
 
                 try {
                     if (dateCell == null || dateCell.getDateCellValue() == null) {
-                        System.out.println("Pusta komorka w: " + (i + 1) + "A (skoroszyt:" + sheet.getSheetName()+") w pliku: " + file.toString());
+                        System.out.println("Pusta komorka w: " + (i + 1) + "A (skoroszyt:" + projectName+") w pliku: " + file.toString());
                         isError = true;
                     } else {
                         taskDate = dateCell.getDateCellValue();
                     }
                 } catch (IllegalStateException e) {
-                    System.out.println("Nieprawidlowa data w komorce :" + (i + 1) + "A (skoroszyt:" + sheet.getSheetName()+") w pliku: " + file.toString());
+                    System.out.println("Nieprawidlowa data w komorce :" + (i + 1) + "A (skoroszyt:" + projectName+") w pliku: " + file.toString());
                     isError = true;
                 }
 
@@ -84,13 +84,13 @@ public class DataLoader {
                 String taskName = "";
                 try {
                     if (taskCell == null || taskCell.getStringCellValue() == null) {
-                        System.out.println("Pusta komorka w: " + (i + 1) + "B (skoroszyt:" + sheet.getSheetName()+") w pliku: " + file.toString());
+                        System.out.println("Pusta komorka w: " + (i + 1) + "B (skoroszyt:" + projectName+") w pliku: " + file.toString());
                         isError = true;
                     } else {
                         taskName = taskCell.getStringCellValue();
                     }
                 } catch (IllegalStateException e) {
-                    System.out.println("Komorka " + (i + 1) + "B" + " nie zawiera prawdidlowej wartosci tekstowej w pliku: " + file.toString());
+                    System.out.println("Komorka " + (i + 1) + "B (skoroszyt:" + projectName + ") nie zawiera prawdidlowej wartosci tekstowej w pliku: " + file.toString());
                     isError = true;
                 }
 
