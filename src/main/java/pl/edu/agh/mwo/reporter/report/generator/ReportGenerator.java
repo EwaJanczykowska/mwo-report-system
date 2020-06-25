@@ -5,9 +5,12 @@ import pl.edu.agh.mwo.reporter.model.Person;
 import pl.edu.agh.mwo.reporter.model.Task;
 import pl.edu.agh.mwo.reporter.model.report.Report1;
 import pl.edu.agh.mwo.reporter.model.report.Report2;
+import pl.edu.agh.mwo.reporter.model.report.Report4;
+
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -17,11 +20,6 @@ public class ReportGenerator implements IReportGenerator {
     private String employeeName;
     private LocalDate dateFrom;
     private LocalDate dateTo;
-
-//    public ReportGenerator(Company company) {
-//        this.company = company;
-//    }
-
 
     public ReportGenerator(Company company, String employeeName, LocalDate dateFrom, LocalDate dateTo) {
         this.company = company;
@@ -60,5 +58,15 @@ public class ReportGenerator implements IReportGenerator {
         }
 
         return report2;
+    }
+
+    @Override
+    public Report4 generateReport4() {
+        Report4 report4 = new Report4();
+        company.getPersons().stream()
+                .map(Person::getTasks)
+                .flatMap(Collection::stream)
+                .forEach(task -> report4.addTask(task.getName(), task.getProjectName(), task.getHours()));
+        return report4;
     }
 }
