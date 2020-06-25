@@ -53,14 +53,18 @@ public class Main {
             } else if (!cmd.hasOption("rtype")) {
                 isError = true;
                 System.out.println("No report type specified\nUse -rtype <numbers 1 to 5> to specify");
-            } else if (dateFilter != null) {
+            }
+
+            if (dateFilter != null) {
                 LocalDate[] receivedDates = dateFilter(dateFilter);
                 dateFrom = receivedDates[0];
                 dateTo = receivedDates[1];
                 if (dateFrom == null) {
                     isError = true;
                 }
-            } else if (employeeFilter != null) {
+            }
+
+            if (employeeFilter != null) {
                 employee = employeeFilter(employeeFilter);
                 if (employee == null) {
                     isError = true;
