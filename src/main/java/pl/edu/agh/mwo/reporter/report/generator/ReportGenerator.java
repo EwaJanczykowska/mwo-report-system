@@ -80,7 +80,7 @@ public class ReportGenerator implements IReportGenerator {
         for (Person person : company.getPersons()) {
             BigDecimal hours = BigDecimal.ZERO;
             for (Task task : person.getTasks()) {
-                if (task.getName().contains(keyword)) {
+                if (task.getName().toLowerCase().contains(keyword.toLowerCase())) {
                     report5.addTask(task);
                 }
             }

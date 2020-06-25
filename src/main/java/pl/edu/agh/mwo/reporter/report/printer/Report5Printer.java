@@ -21,18 +21,13 @@ public class Report5Printer implements IReportPrinter {
 
     public void printToConsole() {
         System.out.println("\n");
-        System.out.println(report.getTitle() + " :" + report.getKeyword());
+        System.out.println(report.getTitle() + ": " + report.getKeyword());
         if (report.getDateFrom() !=null && report.getDateTo() !=null) {
             System.out.println("Dane od: " + report.getDateFrom() + " do: "+report.getDateTo());
         }
         System.out.println("----------------------------------------------------------------------------------");
         System.out.printf("|  %-60s | %-15s|\n", HEADERS[0], HEADERS[1]);
         System.out.println("----------------------------------------------------------------------------------");
-
-
-//        report.getTasks().forEach((name, hours) -> {
-//            System.out.printf("|  %-40s | %-15s|\n",name,  hours);
-//        });
 
         for (Task task: report.getTasks()){
             System.out.printf("|  %-60s | %-15s|\n", task.getName() , task.getHours());
@@ -49,15 +44,6 @@ public class Report5Printer implements IReportPrinter {
                 report.getDateFrom(),
                 report.getDateTo());
         excelExporter.setColumnsWidths(COLUMNS_WIDTHS);
-
-//        for (Task task : ) {
-//            String key = entry.getKey();
-//            BigDecimal value = entry.getValue();
-//
-//            excelExporter.addRow();
-//            excelExporter.addCell(0, key);
-//            excelExporter.addCell(1, value);
-//        }
 
         excelExporter.saveToFile();
     }
