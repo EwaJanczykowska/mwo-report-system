@@ -6,12 +6,14 @@ import pl.edu.agh.mwo.reporter.loader.ReaderExcelFiles;
 import pl.edu.agh.mwo.reporter.model.Company;
 import pl.edu.agh.mwo.reporter.model.report.Report1;
 import pl.edu.agh.mwo.reporter.model.report.Report2;
+import pl.edu.agh.mwo.reporter.model.report.Report3;
 import pl.edu.agh.mwo.reporter.model.report.Report5;
 import pl.edu.agh.mwo.reporter.report.generator.IReportGenerator;
 import pl.edu.agh.mwo.reporter.report.generator.ReportGenerator;
 import pl.edu.agh.mwo.reporter.report.printer.IReportPrinter;
 import pl.edu.agh.mwo.reporter.report.printer.Report1Printer;
 import pl.edu.agh.mwo.reporter.report.printer.Report2Printer;
+import pl.edu.agh.mwo.reporter.report.printer.Report3Printer;
 import pl.edu.agh.mwo.reporter.report.printer.Report5Printer;
 
 import java.io.IOException;
@@ -130,6 +132,14 @@ public class Main {
                         printer2.printToConsole();
                         if (cmd.hasOption("export")) {
                             printer2.printToExcel(outputPath);
+                        }
+                        break;
+                    case "3":
+                        Report3 report3 = reportGenerator.generateReport3();
+                        IReportPrinter printer3 = new Report3Printer(report3);
+                        printer3.printToConsole();
+                        if (cmd.hasOption("export")) {
+                            printer3.printToExcel(outputPath);
                         }
                         break;
                     case "5":
