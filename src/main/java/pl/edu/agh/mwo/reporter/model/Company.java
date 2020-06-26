@@ -1,5 +1,6 @@
 package pl.edu.agh.mwo.reporter.model;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -7,6 +8,10 @@ import java.util.Objects;
 
 public class Company {
     private final List<Person> persons;
+
+    private LocalDate startDate;
+
+    private LocalDate endDate;
 
     public Company() {
         persons = new ArrayList<>();
@@ -33,24 +38,43 @@ public class Company {
         return null;
     }
 
+    public LocalDate getStartDate() {
+        return startDate;
+    }
+
+    public void setStartDate(LocalDate startDate) {
+        this.startDate = startDate;
+    }
+
+    public LocalDate getEndDate() {
+        return endDate;
+    }
+
+    public void setEndDate(LocalDate endDate) {
+        this.endDate = endDate;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Company company = (Company) o;
-        return persons.equals(company.persons);
+        return Objects.equals(persons, company.persons) &&
+                Objects.equals(startDate, company.startDate) &&
+                Objects.equals(endDate, company.endDate);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(persons);
+        return Objects.hash(persons, startDate, endDate);
     }
 
     @Override
     public String toString() {
         return "Company{" +
                 "persons=" + persons +
+                ", startDate=" + startDate +
+                ", endDate=" + endDate +
                 '}';
     }
-
 }

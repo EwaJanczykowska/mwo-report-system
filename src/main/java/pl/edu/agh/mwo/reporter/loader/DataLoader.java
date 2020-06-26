@@ -20,6 +20,9 @@ public class DataLoader {
     public Company loadData(List<Path> paths, LocalDate dateFrom, LocalDate dateTo, String filterByEmployee) throws IOException {
         Company company = new Company();
 
+        LocalDate startDate = null;
+        LocalDate endDate = null;
+
         for (Path path : paths) {
             File file = path.toFile();
             Workbook workbook = WorkbookFactory.create(file);
@@ -34,10 +37,19 @@ public class DataLoader {
 
             List<Task> tasks = readPersonTasks(path, workbook, dateFrom, dateTo);
 
-            if (tasks.size() < 1) {
+            if (tasks.isEmpty()) {
                 continue;
             }
 
+            for (Task task : tasks) {
+                LocalDate taskDate = task.getDate();
+                if (startDate == null || taskDate.isBefore(startDate)) {
+                    startDate = taskDate;
+                }
+                if (endDate == null || taskDate.isAfter(endDate)) {
+                    endDate = taskDate;
+                }
+            }
 
             Person person = company.getPersonByName(personName);
             if (person == null) {
@@ -46,6 +58,9 @@ public class DataLoader {
             }
             person.addTasks(tasks);
         }
+
+        company.setStartDate(startDate);
+        company.setEndDate(endDate);
 
         return company;
     }
