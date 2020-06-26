@@ -46,7 +46,7 @@ public class Report5Printer implements IReportPrinter {
     }
 
     public void printToExcel(String excelFilePath) {
-        ExcelExporter excelExporter = new ExcelExporter(excelFilePath, "report5", report.getTitle()+ report.getKeyword(),
+        ExcelExporter excelExporter = new ExcelExporter(excelFilePath, "report5", report.getTitle()+ "<"+ report.getKeyword() +">",
                 HEADERS, report.getEmployeeName(), report.getDateFrom(), report.getDateTo(), report.getKeyword());
 
         excelExporter.setColumnsWidths(COLUMNS_WIDTHS);
