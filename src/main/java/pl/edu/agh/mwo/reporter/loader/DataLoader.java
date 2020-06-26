@@ -25,7 +25,14 @@ public class DataLoader {
 
         for (Path path : paths) {
             File file = path.toFile();
-            Workbook workbook = WorkbookFactory.create(file);
+            Workbook workbook = null;
+
+            try {
+                workbook = WorkbookFactory.create(file);
+            } catch (IOException e) {
+                System.out.println("Błąd przy otwieraniu pliku: " + e.getMessage());
+                System.exit(1);
+            }
 
             String fileName = file.getName();
             String personName = fileName.replace(".xls", "").replace("_", " ");
