@@ -28,8 +28,8 @@ public class ReportGenerator implements IReportGenerator {
     public ReportGenerator(Company company, String employeeName, LocalDate dateFrom, LocalDate dateTo, String keyword) {
         this.company = company;
         this.employeeName = employeeName;
-        this.dateFrom = dateFrom;
-        this.dateTo = dateTo;
+        this.dateFrom = dateFrom != null ? dateFrom : company.getStartDate();
+        this.dateTo = dateTo != null ? dateTo : company.getEndDate();
         this.projectNames = findProjectNames(company);
         this.keyword = keyword;
     }

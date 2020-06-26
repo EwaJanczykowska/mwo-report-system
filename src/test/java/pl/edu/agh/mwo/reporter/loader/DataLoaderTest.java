@@ -34,6 +34,9 @@ public class DataLoaderTest {
         Assert.assertEquals("Nowak Piotr", person1.getName());
         Assert.assertEquals(1, person1.getTasks().size());
 
+        Assert.assertEquals(LocalDate.of(2012, 1, 16), company.getStartDate());
+        Assert.assertEquals(LocalDate.of(2012, 1, 20), company.getEndDate());
+
         System.out.println(company);
     }
 

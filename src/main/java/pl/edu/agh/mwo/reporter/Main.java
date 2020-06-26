@@ -70,10 +70,12 @@ public class Main {
 
             if (dateFilter != null) {
                 LocalDate[] receivedDates = dateFilter(dateFilter);
-                dateFrom = receivedDates[0];
-                dateTo = receivedDates[1];
-                if (dateFrom == null) {
+                if (receivedDates == null) {
                     isError = true;
+                }
+                else {
+                    dateFrom = receivedDates[0];
+                    dateTo = receivedDates[1];
                 }
             }
 
@@ -177,16 +179,14 @@ public class Main {
         } else if (datefiltercheck.equals("-xxxx/xx/xx")) {
             String dateToString = inputDate.replace("-", "");
             dateTo = LocalDate.parse(dateToString, formatter);
-            String dateFromString = "1900/01/01";
-            dateFrom = LocalDate.parse(dateFromString, formatter);
+            dateFrom = null;
         } else if (datefiltercheck.equals("xxxx/xx/xx-")) {
             String dateFromString = inputDate.replace("-", "");
             dateFrom = LocalDate.parse(dateFromString, formatter);
             dateTo = LocalDate.now();
         } else {
             System.out.println("Wrong date format provided, report will not be generated");
-            dateTo = null;
-            dateFrom = null;
+            return null;
         }
         return new LocalDate[]{dateFrom, dateTo};
     }
