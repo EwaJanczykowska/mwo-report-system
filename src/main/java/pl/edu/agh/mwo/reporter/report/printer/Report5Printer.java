@@ -22,10 +22,17 @@ public class Report5Printer implements IReportPrinter {
 
     public void printToConsole() {
         System.out.println("\n");
-        System.out.println(report.getTitle() + ": " + report.getKeyword());
+        String tytul = report.getTitle() + ": <" + report.getKeyword() +">";
+        if (report.getEmployeeName() !=null){
+            System.out.println(tytul +" dla: " +report.getEmployeeName().replace("_"," "));
+        } else {
+            System.out.println(tytul);
+        }
+
         if (report.getDateFrom() !=null && report.getDateTo() !=null) {
             System.out.println("Dane od: " + report.getDateFrom() + " do: "+report.getDateTo());
         }
+
         System.out.println("--------------------------------------------------------------------------------------------------------------------");
         System.out.printf("|  %-60s | %-15s| %-15s| %-15s|\n", HEADERS[0], HEADERS[1], HEADERS[2],HEADERS[3]);
         System.out.println("-------------------------------------------------------------------------------------------------------------------");
