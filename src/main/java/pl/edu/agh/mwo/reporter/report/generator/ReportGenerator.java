@@ -9,9 +9,7 @@ import pl.edu.agh.mwo.reporter.model.report.Report5;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 public class ReportGenerator implements IReportGenerator {
@@ -22,28 +20,16 @@ public class ReportGenerator implements IReportGenerator {
     private LocalDate dateTo;
     private String keyword;
 
-//    public ReportGenerator(Company company) {
-//        this.company = company;
-//    }
-
-
-    public ReportGenerator(Company company, String employeeName, LocalDate dateFrom, LocalDate dateTo) {
-        this.company = company;
-        this.employeeName = employeeName;
-        this.dateFrom = dateFrom;
-        this.dateTo = dateTo;
-    }
-
     public ReportGenerator(Company company, String employeeName, LocalDate dateFrom, LocalDate dateTo, String keyword) {
         this.company = company;
         this.employeeName = employeeName;
         this.dateFrom = dateFrom;
         this.dateTo = dateTo;
-        this.keyword=keyword;
+        this.keyword = keyword;
     }
 
     public Report1 generateReport1() {
-        Report1 report1 = new Report1(employeeName,dateFrom, dateTo);
+        Report1 report1 = new Report1(employeeName, dateFrom, dateTo);
         for (Person person : company.getPersons()) {
             BigDecimal hours = BigDecimal.ZERO;
             for (Task task : person.getTasks()) {
@@ -55,7 +41,7 @@ public class ReportGenerator implements IReportGenerator {
     }
 
     public Report2 generateReport2() {
-        Report2 report2 = new Report2(employeeName,dateFrom, dateTo);
+        Report2 report2 = new Report2(employeeName, dateFrom, dateTo);
         final Set<String> projectNames = new HashSet<>();
         company.getPersons().forEach(person -> person.getTasks().forEach(task -> projectNames.add(task.getProjectName())));
 
@@ -75,10 +61,9 @@ public class ReportGenerator implements IReportGenerator {
     }
 
     public Report5 generateReport5() {
-        Report5 report5 = new Report5(employeeName,dateFrom, dateTo, keyword);
-       // List<Task> tablicaTask= new ArrayList<>();
+        Report5 report5 = new Report5(employeeName, dateFrom, dateTo, keyword);
+
         for (Person person : company.getPersons()) {
-            BigDecimal hours = BigDecimal.ZERO;
             for (Task task : person.getTasks()) {
                 if (task.getName().toLowerCase().contains(keyword.toLowerCase())) {
                     report5.addTask(task);
