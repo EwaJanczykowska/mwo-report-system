@@ -25,7 +25,7 @@ public class Report1Printer implements IReportPrinter {
         } else {
             System.out.println(report.getTitle());
         }
-        if (report.getDateFrom() !=null) {
+        if (report.getDateFrom() !=null && report.getDateTo() !=null) {
             System.out.println("Dane od: " + report.getDateFrom() + " do: "+report.getDateTo());
         }
         System.out.println("--------------------------------------------------------------");

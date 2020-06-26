@@ -22,7 +22,7 @@ public class Report2Printer implements IReportPrinter {
     public void printToConsole() {
         System.out.println("\n");
         System.out.println(report.getTitle());
-        if (report.getDateFrom() !=null) {
+        if (report.getDateFrom() !=null && report.getDateTo() !=null) {
             System.out.println("Dane od: " + report.getDateFrom() + " do: "+report.getDateTo());
         }
         System.out.println("--------------------------------------------------------------");

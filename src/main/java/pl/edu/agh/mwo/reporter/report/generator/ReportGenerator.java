@@ -90,7 +90,7 @@ public class ReportGenerator implements IReportGenerator {
 
     @Override
     public Report4 generateReport4() {
-        Report4 report4 = new Report4();
+        Report4 report4 = new Report4(employeeName, dateFrom, dateTo, keyword);
         company.getPersons().stream()
                 .map(Person::getTasks)
                 .flatMap(Collection::stream)
