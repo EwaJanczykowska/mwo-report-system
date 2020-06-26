@@ -7,12 +7,14 @@ import pl.edu.agh.mwo.reporter.model.Company;
 import pl.edu.agh.mwo.reporter.model.report.Report1;
 import pl.edu.agh.mwo.reporter.model.report.Report2;
 import pl.edu.agh.mwo.reporter.model.report.Report3;
+import pl.edu.agh.mwo.reporter.model.report.Report5;
 import pl.edu.agh.mwo.reporter.report.generator.IReportGenerator;
 import pl.edu.agh.mwo.reporter.report.generator.ReportGenerator;
 import pl.edu.agh.mwo.reporter.report.printer.IReportPrinter;
 import pl.edu.agh.mwo.reporter.report.printer.Report1Printer;
 import pl.edu.agh.mwo.reporter.report.printer.Report2Printer;
 import pl.edu.agh.mwo.reporter.report.printer.Report3Printer;
+import pl.edu.agh.mwo.reporter.report.printer.Report5Printer;
 
 import java.io.IOException;
 import java.nio.file.Path;
@@ -97,6 +99,10 @@ public class Main {
                     System.out.println("Task filtration can be used only with -rtype 5");
                 }
             }
+            else if (rType.equals("5")) {
+                isError = true;
+                System.out.println("Missing -taskfilter argument for report 5");
+            }
 
             if (!isError) {
                 ReaderExcelFiles f = new ReaderExcelFiles();
@@ -104,14 +110,13 @@ public class Main {
                 DataLoader dataLoader = new DataLoader();
 
                 Company company = dataLoader.loadData(allFiles, dateFrom, dateTo, employee);
-//                Company company = dataLoader.loadData(allFiles, dateFrom, dateTo, employee, task);
 
                 if (company.getPersons().size() < 1) {
                     System.out.println("No data for specified filter");
                     return;
                 }
 
-                IReportGenerator reportGenerator = new ReportGenerator(company, employeeFilter, dateFrom, dateTo);
+                IReportGenerator reportGenerator = new ReportGenerator(company, employeeFilter, dateFrom, dateTo, task);
                 switch (rType) {
                     case "1":
                         Report1 report1 = reportGenerator.generateReport1();
@@ -135,6 +140,14 @@ public class Main {
                         printer3.printToConsole();
                         if (cmd.hasOption("export")) {
                             printer3.printToExcel(outputPath);
+                        }
+                        break;
+                    case "5":
+                        Report5 report5 = reportGenerator.generateReport5();
+                        IReportPrinter printer5 = new Report5Printer(report5);
+                        printer5.printToConsole();
+                        if (cmd.hasOption("keyword")) {
+                            printer5.printToExcel(outputPath);
                         }
                         break;
                     default:
