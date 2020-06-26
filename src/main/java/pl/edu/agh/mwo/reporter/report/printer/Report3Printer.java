@@ -35,12 +35,12 @@ public class Report3Printer implements IReportPrinter {
             System.out.println("Dane od: " + report.getDateFrom() + " do: "+report.getDateTo());
         }
 
-       /// System.out.println(report.getTitle());
-       // System.out.println("-----------------------------------------------------------------------------------------------------");
+        System.out.println(report.getTitle());
+        printHorizontalLine(projectNames);
         System.out.printf("|  %-30s  |", HEADERS[0]);
         projectNames.forEach(project -> System.out.printf("  %-15s  |", project));
         System.out.printf("  %-20s  |\n", HEADERS[1]);
-       // System.out.println("-----------------------------------------------------------------------------------------------------");
+        printHorizontalLine(projectNames);
 
         for (String personName : personNames) {
             Report3.Record record = report.getRecordForPerson(personName);
@@ -51,7 +51,7 @@ public class Report3Printer implements IReportPrinter {
 
         }
 
-      //  System.out.println("-----------------------------------------------------------------------------------------------------");
+        printHorizontalLine(projectNames);
     }
 
     @Override
@@ -98,6 +98,11 @@ public class Report3Printer implements IReportPrinter {
 
         excelExporter.saveToFile();
 
+    }
+    private void printHorizontalLine(List<String> projects) {
+        System.out.print("-------------------------------------------------------------");
+        projects.forEach(project -> System.out.print("--------------------"));
+        System.out.print("\n");
     }
 }
 
