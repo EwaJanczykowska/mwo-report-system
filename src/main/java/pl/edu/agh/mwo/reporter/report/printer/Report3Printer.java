@@ -35,6 +35,9 @@ public class Report3Printer implements IReportPrinter {
             System.out.println("Dane od: " + report.getDateFrom() + " do: "+report.getDateTo());
         }
 
+
+        printHorizontalLine(projectNames);
+
         System.out.printf("|  %-30s  |", HEADERS[0]);
         projectNames.forEach(project -> System.out.printf("  %-15s  |", project));
         System.out.printf("  %-20s  |\n", HEADERS[1]);
