@@ -8,10 +8,19 @@ ___  ____    _  _____       ______ ___________ ___________ _____ ___________
 -----------------------------------------------------------------------------
 ----------------------------Command Line Options-----------------------------
 -----------------------------------------------------------------------------
+To use with .jar enter:
+java -jar target/mwo-report-system-1.0-SNAPSHOT.jar
+before following commands
+-----------------------------------------------------------------------------
+
 
 -source <place path of source files here>
 
 This can be either catalog with several excel files or with just one
+
+Example: -source resources
+Example: -source C:\Hours\Team_1
+
 -----------------------------------------------------------------------------
 
 -rtype <choose between 1,2,3,4,5>
@@ -22,6 +31,9 @@ This can be either catalog with several excel files or with just one
 4 - Displays top 10 tasks regarding hours spent within all projects
 5 - Search specific phrase regarding tasks,
     displays list of tasks with total hours
+
+Example: -source resources -rtype 1
+Example: -source resources -rtype 3
 
 -----------------------------------------------------------------------------
 
@@ -37,12 +49,19 @@ This filters data from specified date till now
 
 This filters data from beginning to specified date
 
+Example: -source resources -rtype 1 -datefilter 2012/01/01-2012/05/03
+Example: -source resources -rtype 1 -datefilter 2011/01/01-
+Example: -source resources -rtype 1 -datefilter -2012/01/25
+
 -----------------------------------------------------------------------------
 
 -export <path\filename.xls>
 
 This option generates Excel file with selected report, to provided path
-with provided file name
+with provided file name. If path is specified it must already exist.
+
+Example: -source resources -rtype 1 -export raport_2012.xls
+Example: -source resources -rtype 1 -export moje_raporty\raport_2012
 
 -----------------------------------------------------------------------------
 
@@ -50,6 +69,26 @@ with provided file name
 
 This filters files regarding specified employee
 
+Example: -source resources -rtype 1 -employeefilter kowalski_jan
+Example: -source resources -rtype 1 -employeefilter kowalski_
+Example: -source resources -rtype 1 -employeefilter jan_
+
+-----------------------------------------------------------------------------
+
+-taskfilter <task>
+
+This filters data regarding provided phrase
+
+Example: -source resources -rtype 1 -taskfilter spotkanie
+
+-----------------------------------------------------------------------------
+-----------------------------------------------------------------------------
+
+-h
+
+This will print quick help
+
+Example: -h
 -----------------------------------------------------------------------------
 -----------------------------------------------------------------------------
 -----------------------------------------------------------------------------

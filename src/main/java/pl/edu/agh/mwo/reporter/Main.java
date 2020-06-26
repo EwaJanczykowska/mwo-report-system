@@ -31,6 +31,8 @@ public class Main {
         options.addOption("export", true, "export report to excel"); //-export results.xls
         options.addOption("datefilter", true, "date filter"); //-datefilter 2011/01/01-2019/12/31
         options.addOption("employeefilter", true, "employee name filter"); //-employeefilter Kowalski_Jan
+        options.addOption("taskfilter", true, "task name filter"); //-taskfilter spotkanie
+        options.addOption("h", false, "help"); //-h
         try {
             CommandLine cmd = parser.parse(options, args);
             String directory = cmd.getOptionValue("source");
@@ -38,10 +40,12 @@ public class Main {
             String dateFilter = cmd.getOptionValue("datefilter");
             String employeeFilter = cmd.getOptionValue("employeefilter");
             String outputPath = cmd.getOptionValue("export");
+            String taskFilter = cmd.getOptionValue("taskfilter");
 
             LocalDate dateFrom = null;
             LocalDate dateTo = null;
             String employee = null;
+            String task = null;
 
             boolean isError = false;
 
@@ -49,9 +53,22 @@ public class Main {
                 isError = true;
                 System.out.println("No source specified\nUse -source <path> to specify");
             }
-            if(!cmd.hasOption("rtype")) {
+            if (!cmd.hasOption("rtype")) {
                 isError = true;
                 System.out.println("No report type specified\nUse -rtype <numbers 1 to 5> to specify");
+            }
+            if (cmd.hasOption("h")) {
+                printHelp();
+            }
+
+            if (outputPath != null) {
+                String correctFormat = ".xls";
+                int dotIndex = outputPath.indexOf('.');
+                if (dotIndex > 0) {
+                    outputPath = outputPath.split("\\.")[0] + correctFormat;
+                } else {
+                    outputPath = outputPath + correctFormat;
+                }
             }
 
             if (dateFilter != null) {
@@ -70,15 +87,25 @@ public class Main {
                 }
             }
 
+            if (taskFilter != null) {
+                if (rType.equals("5")) {
+                    task = taskFilter;
+                } else {
+                    isError = true;
+                    System.out.println("Task filtration can be used only with -rtype 5");
+                }
+            }
+
             if (!isError) {
                 ReaderExcelFiles f = new ReaderExcelFiles();
                 ArrayList<Path> allFiles = f.getAllFiles(directory);
                 DataLoader dataLoader = new DataLoader();
 
                 Company company = dataLoader.loadData(allFiles, dateFrom, dateTo, employee);
+//                Company company = dataLoader.loadData(allFiles, dateFrom, dateTo, employee, task);
 
                 if (company.getPersons().size() < 1) {
-                    System.out.println("Brak danych dla podanego zakresu.");
+                    System.out.println("No data for specified filter");
                     return;
                 }
 
@@ -105,7 +132,8 @@ public class Main {
                 }
             }
         } catch (MissingArgumentException a) {
-            System.out.println("Argument for either:\n-source\n-rtype\n-datefilter\n-employeefilter\nnot found.");
+            System.out.println("Argument for either:\n-source\n-rtype\n-datefilter\n-employeefilter\n-export" +
+                    "\n-taskfilter\nnot found.");
         } catch (DateTimeParseException b) {
             System.out.println("Wrong dates provided, for example 13 month, 32 day etc.");
         }
@@ -184,6 +212,18 @@ public class Main {
             }
         }
         return inputString;
+    }
+
+    private static void printHelp() {
+        System.out.println("Available commands:\n" +
+                "-source <place path of source files here>\n" +
+                "-rtype <choose between 1,2,3,4,5>\n" +
+                "-datefilter <yyyy/mm/dd-yyyy/mm/dd>\n" +
+                "-export <path\\filename.xls>\n" +
+                "-employeefilter <surname_name>\n" +
+                "-taskfilter <task>\n" +
+                "-h for help\n" +
+                "check ReadMe file for more information");
     }
 
 }
