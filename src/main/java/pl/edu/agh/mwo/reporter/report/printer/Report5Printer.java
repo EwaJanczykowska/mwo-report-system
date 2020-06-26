@@ -33,6 +33,7 @@ public class Report5Printer implements IReportPrinter {
         for (Task task: report.getTasks()){
             System.out.printf("|  %-60s | %-15s| %-15s| %-15s|\n", task.getName() , task.getHours(), task.getDate(), task.getProjectName());
         }
+
         System.out.println("--------------------------------------------------------------------------------------------------------------------");
 
     }
