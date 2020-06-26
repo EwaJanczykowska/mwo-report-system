@@ -18,7 +18,7 @@ public class Report4Printer implements IReportPrinter {
         System.out.println("\n");
 
         if (report.getEmployeeName() !=null){
-            System.out.println(report.getTitle() + "dla dewelopera: "+report.getEmployeeName());
+            System.out.println(report.getTitle() + " dla dewelopera: "+report.getEmployeeName().replace("_"," "));
         } else {
             System.out.println(report.getTitle());
         }

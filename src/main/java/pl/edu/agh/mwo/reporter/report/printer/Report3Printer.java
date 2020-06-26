@@ -10,9 +10,9 @@ import pl.edu.agh.mwo.reporter.model.report.Report3;
 
 public class Report3Printer implements IReportPrinter {
 
-    private static final String[] HEADERS = {"Nazwisko i imie", "Ogólna liczba godzin"};
+    private static final String[] HEADERS = {"Nazwisko i imie", "\"Suma godzin\""};
     private final Report3 report;
-    private static final int[] COLUMNS_WIDTHS = {20, 20};
+    private static final int[] COLUMNS_WIDTHS = {20, 30};
 
     public Report3Printer(Report3 report) {
         this.report = report;
@@ -24,6 +24,17 @@ public class Report3Printer implements IReportPrinter {
         List<String> personNames = report.getPersonNames();
 
         System.out.println("\n");
+
+        if (report.getEmployeeName() !=null){
+            System.out.println(report.getTitle() +" dla: " +report.getEmployeeName().replace("_"," "));
+        } else {
+            System.out.println(report.getTitle());
+        }
+
+        if (report.getDateFrom() !=null && report.getDateTo() !=null) {
+            System.out.println("Dane od: " + report.getDateFrom() + " do: "+report.getDateTo());
+        }
+
         System.out.println(report.getTitle());
         printHorizontalLine(projectNames);
         System.out.printf("|  %-30s  |", HEADERS[0]);
@@ -48,24 +59,25 @@ public class Report3Printer implements IReportPrinter {
 
         List<String> projectNames = report.getProjectNames();
         List<String> personNames = report.getPersonNames();
-        List<Report3.Record> rekords = report.getRecords();
 
-        List<String> nagl = new ArrayList<>();
+
+        List<String> naglowki = new ArrayList<>();
+        naglowki.add("Nazwisko i imie");
+        projectNames.forEach(project -> naglowki.add(project));
+        naglowki.add("Suma godzin");
+        String[] excelHeaders = naglowki.toArray(new String[naglowki.size()]);
+
+
 
         ExcelExporter excelExporter = new ExcelExporter(excelFilePath, "report3",
                 report.getTitle(),
-                HEADERS,
+                excelHeaders,
                 report.getEmployeeName(),
                 report.getDateFrom(),
                 report.getDateTo(),
                 report.getKeyword());
 
-  //      excelExporter.setColumnsWidths(COLUMNS_WIDTHS);
-
-//        System.out.printf("|  %-30s  |", HEADERS[0]);
-//        projectNames.forEach(project -> System.out.printf("  %-15s  |", project));
-//        System.out.printf("  %-20s  |\n", HEADERS[1]);
-//        System.out.println("-----------------------------------------------------------------------------------------------------");
+        excelExporter.setColumnsWidths(COLUMNS_WIDTHS);
 
         for (String personName : personNames) {
             Report3.Record record = report.getRecordForPerson(personName);
@@ -78,7 +90,6 @@ public class Report3Printer implements IReportPrinter {
                 i++;
                 excelExporter.addCell(i,h);
             }
-//            record.getHoursPerProject().values().forEach( hours -> excelExporter.addCell(1, hours));
             i++;
             excelExporter.addCell(i, record.getTotalNumberOfHours());
 

@@ -19,11 +19,11 @@ import java.util.stream.Collectors;
 public class ReportGenerator implements IReportGenerator {
 
     private final Company company;
-    private String employeeName;
-    private LocalDate dateFrom;
-    private LocalDate dateTo;
-    private List<String> projectNames;
-    private String keyword;
+    private final String employeeName;
+    private final LocalDate dateFrom;
+    private final LocalDate dateTo;
+    private final List<String> projectNames;
+    private final String keyword;
 
     public ReportGenerator(Company company, String employeeName, LocalDate dateFrom, LocalDate dateTo, String keyword) {
         this.company = company;
@@ -68,7 +68,7 @@ public class ReportGenerator implements IReportGenerator {
 
     @Override
     public Report3 generateReport3() {
-        Report3 report3 = new Report3(projectNames);
+        Report3 report3 = new Report3(projectNames, employeeName, dateFrom, dateTo);
         for (Person person : company.getPersons()) {
             for (Task task : person.getTasks()) {
                 BigDecimal hours = task.getHours();
