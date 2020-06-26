@@ -25,11 +25,11 @@ public class Report3Printer implements IReportPrinter {
 
         System.out.println("\n");
         System.out.println(report.getTitle());
-        System.out.println("-----------------------------------------------------------------------------------------------------");
+       // System.out.println("-----------------------------------------------------------------------------------------------------");
         System.out.printf("|  %-30s  |", HEADERS[0]);
         projectNames.forEach(project -> System.out.printf("  %-15s  |", project));
         System.out.printf("  %-20s  |\n", HEADERS[1]);
-        System.out.println("-----------------------------------------------------------------------------------------------------");
+       // System.out.println("-----------------------------------------------------------------------------------------------------");
 
         for (String personName : personNames) {
             Report3.Record record = report.getRecordForPerson(personName);
@@ -40,7 +40,7 @@ public class Report3Printer implements IReportPrinter {
 
         }
 
-        System.out.println("-----------------------------------------------------------------------------------------------------");
+      //  System.out.println("-----------------------------------------------------------------------------------------------------");
     }
 
     @Override
@@ -73,9 +73,14 @@ public class Report3Printer implements IReportPrinter {
             excelExporter.addRow();
             excelExporter.addCell(0, record.getPersonName());
 
-            int i = 1;
-            record.getHoursPerProject().values().forEach( hours -> excelExporter.addCell(1, hours));
-            excelExporter.addCell(2, record.getTotalNumberOfHours());
+            int i = 0;
+            for (BigDecimal h : record.getHoursPerProject().values()){
+                i++;
+                excelExporter.addCell(i,h);
+            }
+//            record.getHoursPerProject().values().forEach( hours -> excelExporter.addCell(1, hours));
+            i++;
+            excelExporter.addCell(i, record.getTotalNumberOfHours());
 
         }
 
