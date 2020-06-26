@@ -19,7 +19,8 @@ public class DataLoader {
 
     public Company loadData(List<Path> paths, LocalDate dateFrom, LocalDate dateTo, String filterByEmployee) throws IOException {
         Company company = new Company();
-
+        System.out.println(">> Raport błędów w plikach wejściowych Excel <<");
+        System.out.println("----------------------------------------------------------------------------------------");
         for (Path path : paths) {
             File file = path.toFile();
             Workbook workbook = WorkbookFactory.create(file);
