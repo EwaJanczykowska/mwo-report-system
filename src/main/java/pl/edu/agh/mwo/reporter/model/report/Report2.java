@@ -12,11 +12,6 @@ public class Report2 {
     private LocalDate dateFrom;
     private LocalDate dateTo;
 
-//    public Report2() {
-//        this.hoursPerProject = new HashMap<>();
-//    }
-
-
     public Report2(String employeeName, LocalDate dateFrom, LocalDate dateTo) {
         this.hoursPerProject = new HashMap<>();
         this.employeeName = employeeName;
