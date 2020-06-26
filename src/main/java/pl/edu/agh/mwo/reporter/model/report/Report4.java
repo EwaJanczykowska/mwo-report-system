@@ -10,12 +10,12 @@ import java.util.stream.Collectors;
 
 public class Report4 {
 
-    private String title = "Raport 4. Top 20 najbardziej czasochłonnych zadań";
-    private List<Record> records;
-    private String employeeName;
-    private LocalDate dateFrom;
-    private LocalDate dateTo;
-    private String keyword;
+    private final String title = "Raport 4. Top 20 najbardziej czasochłonnych zadań ";
+    private final List<Record> records;
+    private final String employeeName;
+    private final LocalDate dateFrom;
+    private final LocalDate dateTo;
+    private final String keyword;
 
     public Report4(String employeeName, LocalDate dateFrom, LocalDate dateTo, String keyword) {
         this.records = new ArrayList<>();
@@ -67,8 +67,8 @@ public class Report4 {
     }
 
     public static class Record {
-        private String taskName;
-        private String projectName;
+        private final String taskName;
+        private final String projectName;
         private BigDecimal hours;
 
         public Record(

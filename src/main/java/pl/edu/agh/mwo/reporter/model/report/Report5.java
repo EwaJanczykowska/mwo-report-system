@@ -11,13 +11,13 @@ import java.util.Map;
 
 public class Report5 {
 
-    private final String title = "Raport 5. Wykaz zadań wg podanej frazy: ";
+    private final String title = "Raport 5. Wykaz zadań wg podanej frazy ";
 
-    private  List<Task>  tasks;
-    private String employeeName;
-    private LocalDate dateFrom;
-    private LocalDate dateTo;
-    private String keyword;
+    private final List<Task>  tasks;
+    private final String employeeName;
+    private final LocalDate dateFrom;
+    private final LocalDate dateTo;
+    private final String keyword;
 
     public Report5( String employeeName, LocalDate dateFrom, LocalDate dateTo, String keyword) {
         this.tasks = new ArrayList<Task>();

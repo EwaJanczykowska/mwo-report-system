@@ -20,10 +20,10 @@ public class ExcelExporter {
     private HSSFSheet sheet;
     private int rowsCount;
     private Row lastRow;
-    private String employeeName;
-    private LocalDate dateFrom;
-    private LocalDate dateTo;
-    private String keyword;
+    private final String employeeName;
+    private final LocalDate dateFrom;
+    private final LocalDate dateTo;
+    private final String keyword;
 
     public ExcelExporter(String exportFilePath, String reportName, String title, String[] headers,
                          String employeeName, LocalDate dateFrom, LocalDate dateTo, String keyword) {
@@ -36,7 +36,7 @@ public class ExcelExporter {
         initializeWorkbook();
         addRow();
         if (getEmployeeName() != null) {
-            addCell(0, "Raport godzin projektowych dla: " + getEmployeeName());
+            addCell(0, title + " dla: "+ getEmployeeName().replace("_"," "));
         } else {
             addCell(0, title);
         }

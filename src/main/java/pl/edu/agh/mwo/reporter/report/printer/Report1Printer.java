@@ -21,10 +21,11 @@ public class Report1Printer implements IReportPrinter {
     public void printToConsole() {
         System.out.println("\n");
         if (report.getEmployeeName() !=null){
-            System.out.println("Raport godzin projektowych dla: " +report.getEmployeeName());
+            System.out.println(report.getTitle() +" dla: " +report.getEmployeeName().replace("_"," "));
         } else {
             System.out.println(report.getTitle());
         }
+
         if (report.getDateFrom() !=null && report.getDateTo() !=null) {
             System.out.println("Dane od: " + report.getDateFrom() + " do: "+report.getDateTo());
         }

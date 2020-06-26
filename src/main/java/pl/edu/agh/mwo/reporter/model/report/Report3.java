@@ -11,15 +11,15 @@ import java.util.stream.Collectors;
 
 public class Report3 {
 
-    private final String title = "Raport 3. Liczba godzin zrealizowanych przez pracowników w projektach";
+    private final String title = "Raport 3. Liczba godzin zrealizowanych w poszczególnych projektach";
     private final List<Record> records;
     private final List<String> projectNames;
-    private String employeeName;
-    private LocalDate dateFrom;
-    private LocalDate dateTo;
+    private final String employeeName;
+    private final LocalDate dateFrom;
+    private final LocalDate dateTo;
     private String keyword;
 
-    public Report3(List<String> projectNames) {
+    public Report3(List<String> projectNames, String employeeName, LocalDate dateFrom, LocalDate dateTo) {
         this.projectNames = projectNames;
         this.records = new ArrayList<>();
         this.employeeName = employeeName;

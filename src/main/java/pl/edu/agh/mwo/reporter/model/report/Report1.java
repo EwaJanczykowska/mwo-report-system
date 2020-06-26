@@ -9,11 +9,11 @@ import java.util.Map;
 import java.util.Set;
 
 public class Report1 {
-    private final String title = "Raport 1. Liczba godzin zrealizowanych w  projektach.";
+    private final String title = "Raport 1. Liczba godzin zrealizowanych w  projektach ";
     private final Map<Person, BigDecimal> hoursPerPerson;
-    private String employeeName;
-    private LocalDate dateFrom;
-    private LocalDate dateTo;
+    private final String employeeName;
+    private final LocalDate dateFrom;
+    private final LocalDate dateTo;
     private String keyword;
 
 

@@ -6,11 +6,11 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Report2 {
-    private final String title = "Raport 2. Liczba godzin zreazlizowanych w każdym projekcie";
+    private final String title = "Raport 2. Liczba godzin zrealizowanych w projektach";
     private final Map<String, BigDecimal> hoursPerProject;
-    private String employeeName;
-    private LocalDate dateFrom;
-    private LocalDate dateTo;
+    private final String employeeName;
+    private final LocalDate dateFrom;
+    private final LocalDate dateTo;
     private String keyword;
 
 
