@@ -10,7 +10,7 @@ import pl.edu.agh.mwo.reporter.model.report.Report3;
 
 public class Report3Printer implements IReportPrinter {
 
-    private static final String[] HEADERS = {"Nazwisko i imie", "\"Suma godzin\""};
+    private static final String[] HEADERS = {"Nazwisko i imie", "Suma godzin"};
     private final Report3 report;
     private static final int[] COLUMNS_WIDTHS = {20, 30};
 
@@ -35,8 +35,6 @@ public class Report3Printer implements IReportPrinter {
             System.out.println("Dane od: " + report.getDateFrom() + " do: "+report.getDateTo());
         }
 
-        System.out.println(report.getTitle());
-        printHorizontalLine(projectNames);
         System.out.printf("|  %-30s  |", HEADERS[0]);
         projectNames.forEach(project -> System.out.printf("  %-15s  |", project));
         System.out.printf("  %-20s  |\n", HEADERS[1]);
