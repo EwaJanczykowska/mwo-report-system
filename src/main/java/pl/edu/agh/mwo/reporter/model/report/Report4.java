@@ -1,6 +1,7 @@
 package pl.edu.agh.mwo.reporter.model.report;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
@@ -9,11 +10,19 @@ import java.util.stream.Collectors;
 
 public class Report4 {
 
-    private String title = "Raport 4. Top 20 zadań według spędzonego czasu";
+    private String title = "Raport 4. Top 20 najbardziej czasochłonnych zadań";
     private List<Record> records;
+    private String employeeName;
+    private LocalDate dateFrom;
+    private LocalDate dateTo;
+    private String keyword;
 
-    public Report4() {
+    public Report4(String employeeName, LocalDate dateFrom, LocalDate dateTo, String keyword) {
         this.records = new ArrayList<>();
+        this.employeeName = employeeName;
+        this.dateFrom = dateFrom;
+        this.dateTo = dateTo;
+        this.keyword = keyword;
     }
 
     public void addTask(String taskName, String projectName, BigDecimal hours) {
@@ -28,6 +37,22 @@ public class Report4 {
             newRecord.addHours(hours);
             records.add(newRecord);
         }
+    }
+
+    public String getEmployeeName() {
+        return employeeName;
+    }
+
+    public LocalDate getDateFrom() {
+        return dateFrom;
+    }
+
+    public LocalDate getDateTo() {
+        return dateTo;
+    }
+
+    public String getKeyword() {
+        return keyword;
     }
 
     public String getTitle() {
