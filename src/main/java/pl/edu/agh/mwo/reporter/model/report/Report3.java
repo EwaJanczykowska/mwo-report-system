@@ -1,6 +1,7 @@
 package pl.edu.agh.mwo.reporter.model.report;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -10,13 +11,38 @@ import java.util.stream.Collectors;
 
 public class Report3 {
 
-    private final String title = "Raport 3. Liczba godzin zrealizwanych przez pracowników w projektach";
+    private final String title = "Raport 3. Liczba godzin zrealizowanych przez pracowników w projektach";
     private final List<Record> records;
     private final List<String> projectNames;
+    private String employeeName;
+    private LocalDate dateFrom;
+    private LocalDate dateTo;
+    private String keyword;
 
     public Report3(List<String> projectNames) {
         this.projectNames = projectNames;
         this.records = new ArrayList<>();
+        this.employeeName = employeeName;
+        this.dateFrom = dateFrom;
+        this.dateTo = dateTo;
+        this.keyword=keyword;
+
+    }
+
+    public String getEmployeeName() {
+        return employeeName;
+    }
+
+    public LocalDate getDateFrom() {
+        return dateFrom;
+    }
+
+    public LocalDate getDateTo() {
+        return dateTo;
+    }
+
+    public String getKeyword() {
+        return keyword;
     }
 
     public String getTitle() {
