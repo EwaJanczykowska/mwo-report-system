@@ -59,6 +59,11 @@ public class DataLoader {
             for (int i = 1; i <= sheet.getLastRowNum(); i++) {
                 isError = false;
                 Row row = sheet.getRow(i);
+
+                if (isRowEmpty(row)) {
+                    continue;
+                }
+
                 Cell dateCell = row.getCell(0);
                 Date taskDate = null;
 
@@ -129,6 +134,22 @@ public class DataLoader {
         return dateToConvert.toInstant()
                 .atZone(ZoneId.systemDefault())
                 .toLocalDate();
+    }
+
+    private boolean isRowEmpty(Row row) {
+        if (row == null) {
+            return true;
+        }
+        if (row.getLastCellNum() <= 0) {
+            return true;
+        }
+        for (int cellNum = row.getFirstCellNum(); cellNum < row.getLastCellNum(); cellNum++) {
+            Cell cell = row.getCell(cellNum);
+            if (cell != null && cell.getCellType() != CellType.BLANK && cell.toString() != null) {
+                return false;
+            }
+        }
+        return true;
     }
 
 }
