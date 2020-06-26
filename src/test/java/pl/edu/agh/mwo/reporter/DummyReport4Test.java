@@ -23,8 +23,7 @@ public class DummyReport4Test {
     @Test
     public void should_generate_and_print_report_4() throws Exception {
         Company company = companyFixture();
-//        System.out.println(company);
-        ReportGenerator generator = new ReportGenerator(company, "", LocalDate.now(), LocalDate.now());
+        ReportGenerator generator = new ReportGenerator(company, "", LocalDate.now(), LocalDate.now(), null);
 
         Report4 report4 = generator.generateReport4();
 
