@@ -11,7 +11,7 @@ import java.util.Map;
 
 public class Report5 {
 
-    private final String title = "Wykaz zadań wg słowa kluczowego";
+    private final String title = "Raport 5. Wykaz zadań wg podanej frazy: ";
 
     private  List<Task>  tasks;
     private String employeeName;
@@ -31,6 +31,7 @@ public class Report5 {
        this.tasks.add(zadanie);
        return tasks;
     }
+
 
     public String getTitle() {
         return title;

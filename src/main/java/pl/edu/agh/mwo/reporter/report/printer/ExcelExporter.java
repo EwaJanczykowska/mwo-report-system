@@ -23,13 +23,15 @@ public class ExcelExporter {
     private String employeeName;
     private LocalDate dateFrom;
     private LocalDate dateTo;
+    private String keyword;
 
     public ExcelExporter(String exportFilePath, String reportName, String title, String[] headers,
-                         String employeeName, LocalDate dateFrom, LocalDate dateTo) {
+                         String employeeName, LocalDate dateFrom, LocalDate dateTo, String keyword) {
         this.exportFilePath = exportFilePath;
         this.employeeName = employeeName;
         this.dateFrom = dateFrom;
         this.dateTo = dateTo;
+        this.keyword=keyword;
 
         initializeWorkbook();
         addRow();
@@ -52,7 +54,9 @@ public class ExcelExporter {
 
     }
 
-
+    public String getKeyword() {
+        return keyword;
+    }
 
     public String getEmployeeName() {
         return employeeName;

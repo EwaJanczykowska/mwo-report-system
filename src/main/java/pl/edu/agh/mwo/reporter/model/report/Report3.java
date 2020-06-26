@@ -10,7 +10,7 @@ import java.util.stream.Collectors;
 
 public class Report3 {
 
-    private final String title = "Raport godzin poswięconych przez pracowników na projekty";
+    private final String title = "Raport 3. Liczba godzin zrealizwanych przez pracowników w projektach";
     private final List<Record> records;
     private final List<String> projectNames;
 

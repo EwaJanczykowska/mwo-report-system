@@ -43,7 +43,8 @@ public class Report2Printer implements IReportPrinter {
                 HEADERS,
                 report.getEmployeeName(),
                 report.getDateFrom(),
-                report.getDateTo());
+                report.getDateTo(),
+                report.getKeyword());
         excelExporter.setColumnsWidths(COLUMNS_WIDTHS);
 
         for (Map.Entry<String, BigDecimal> entry : report.getHoursPerProject().entrySet()) {

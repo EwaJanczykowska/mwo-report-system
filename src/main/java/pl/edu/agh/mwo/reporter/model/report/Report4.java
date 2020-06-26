@@ -9,7 +9,7 @@ import java.util.stream.Collectors;
 
 public class Report4 {
 
-    private String title = "Top 20 zadań według spędzonego czasu";
+    private String title = "Raport 4. Top 20 zadań według spędzonego czasu";
     private List<Record> records;
 
     public Report4() {

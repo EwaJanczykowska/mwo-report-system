@@ -40,7 +40,7 @@ public class Report1Printer implements IReportPrinter {
 
     public void printToExcel(String excelFilePath) {
         ExcelExporter excelExporter = new ExcelExporter(excelFilePath, "report1", report.getTitle(),
-                HEADERS, report.getEmployeeName(), report.getDateFrom(), report.getDateTo());
+                HEADERS, report.getEmployeeName(), report.getDateFrom(), report.getDateTo(), report.getKeyword());
 
         excelExporter.setColumnsWidths(COLUMNS_WIDTHS);
 
