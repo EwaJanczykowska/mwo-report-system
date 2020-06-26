@@ -6,11 +6,13 @@ import pl.edu.agh.mwo.reporter.model.Task;
 import pl.edu.agh.mwo.reporter.model.report.Report1;
 import pl.edu.agh.mwo.reporter.model.report.Report2;
 import pl.edu.agh.mwo.reporter.model.report.Report3;
+import pl.edu.agh.mwo.reporter.model.report.Report4;
 import pl.edu.agh.mwo.reporter.model.report.Report5;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -86,6 +88,17 @@ public class ReportGenerator implements IReportGenerator {
                 .collect(Collectors.toList());
     }
 
+    @Override
+    public Report4 generateReport4() {
+        Report4 report4 = new Report4();
+        company.getPersons().stream()
+                .map(Person::getTasks)
+                .flatMap(Collection::stream)
+                .forEach(task -> report4.addTask(task.getName(), task.getProjectName(), task.getHours()));
+        return report4;
+    }
+
+    @Override
     public Report5 generateReport5() {
         Report5 report5 = new Report5(employeeName, dateFrom, dateTo, keyword);
 

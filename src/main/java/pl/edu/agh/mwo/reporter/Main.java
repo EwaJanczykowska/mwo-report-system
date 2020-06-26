@@ -4,17 +4,10 @@ import org.apache.commons.cli.*;
 import pl.edu.agh.mwo.reporter.loader.DataLoader;
 import pl.edu.agh.mwo.reporter.loader.ReaderExcelFiles;
 import pl.edu.agh.mwo.reporter.model.Company;
-import pl.edu.agh.mwo.reporter.model.report.Report1;
-import pl.edu.agh.mwo.reporter.model.report.Report2;
-import pl.edu.agh.mwo.reporter.model.report.Report3;
-import pl.edu.agh.mwo.reporter.model.report.Report5;
+import pl.edu.agh.mwo.reporter.model.report.*;
 import pl.edu.agh.mwo.reporter.report.generator.IReportGenerator;
 import pl.edu.agh.mwo.reporter.report.generator.ReportGenerator;
-import pl.edu.agh.mwo.reporter.report.printer.IReportPrinter;
-import pl.edu.agh.mwo.reporter.report.printer.Report1Printer;
-import pl.edu.agh.mwo.reporter.report.printer.Report2Printer;
-import pl.edu.agh.mwo.reporter.report.printer.Report3Printer;
-import pl.edu.agh.mwo.reporter.report.printer.Report5Printer;
+import pl.edu.agh.mwo.reporter.report.printer.*;
 
 import java.io.IOException;
 import java.nio.file.Path;
@@ -142,11 +135,19 @@ public class Main {
                             printer3.printToExcel(outputPath);
                         }
                         break;
+                    case "4":
+                        Report4 report4 = reportGenerator.generateReport4();
+                        IReportPrinter printer4 = new Report4Printer(report4);
+                        printer4.printToConsole();
+                        if (cmd.hasOption("export")) {
+                            printer4.printToExcel(outputPath);
+                        }
+                        break;
                     case "5":
                         Report5 report5 = reportGenerator.generateReport5();
                         IReportPrinter printer5 = new Report5Printer(report5);
                         printer5.printToConsole();
-                        if (cmd.hasOption("keyword")) {
+                        if (cmd.hasOption("export")) {
                             printer5.printToExcel(outputPath);
                         }
                         break;
