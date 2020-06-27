@@ -8,11 +8,19 @@ ___  ____    _  _____       ______ ___________ ___________ _____ ___________
 -----------------------------------------------------------------------------
 ----------------------------Command Line Options-----------------------------
 -----------------------------------------------------------------------------
+
+This program can be used to generate reports based on excel files prepared
+by employees. Input files must be done using certain template. User can
+choose between 5 types of reports. By default report is generated in
+console, but there is option to generate output excel file with charts.
+
+-----------------------------------------------------------------------------
+
 To use with .jar enter:
 java -jar target/mwo-report-system-1.0-SNAPSHOT.jar
 before following commands
------------------------------------------------------------------------------
 
+-----------------------------------------------------------------------------
 
 -source <place path of source files here>
 
