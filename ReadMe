@@ -77,9 +77,9 @@ Example: -source resources -rtype 1 -employeefilter jan_
 
 -taskfilter <task>
 
-This filters data regarding provided phrase
+This filters data regarding provided phrase, only works with type 5 report
 
-Example: -source resources -rtype 1 -taskfilter spotkanie
+Example: -source resources -rtype 5 -taskfilter spotkanie
 
 -----------------------------------------------------------------------------
 -----------------------------------------------------------------------------
@@ -89,6 +89,7 @@ Example: -source resources -rtype 1 -taskfilter spotkanie
 This will print quick help
 
 Example: -h
+
 -----------------------------------------------------------------------------
 -----------------------------------------------------------------------------
 -----------------------------------------------------------------------------
