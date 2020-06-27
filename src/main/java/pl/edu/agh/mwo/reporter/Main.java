@@ -95,7 +95,7 @@ public class Main {
                     System.out.println("Task filtration can be used only with -rtype 5");
                 }
             }
-            else if (rType.equals("5")) {
+            else if (rType != null && rType.equals("5")) {
                 isError = true;
                 System.out.println("Missing -taskfilter argument for report 5");
             }
