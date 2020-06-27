@@ -79,7 +79,7 @@ This filters files regarding specified employee
 
 Example: -source resources -rtype 1 -employeefilter kowalski_jan
 Example: -source resources -rtype 1 -employeefilter kowalski_
-Example: -source resources -rtype 1 -employeefilter jan_
+Example: -source resources -rtype 1 -employeefilter _jan
 
 -----------------------------------------------------------------------------
 

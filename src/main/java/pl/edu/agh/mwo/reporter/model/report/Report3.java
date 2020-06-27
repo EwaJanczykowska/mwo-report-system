@@ -17,7 +17,6 @@ public class Report3 {
     private final String employeeName;
     private final LocalDate dateFrom;
     private final LocalDate dateTo;
-    private String keyword;
 
     public Report3(List<String> projectNames, String employeeName, LocalDate dateFrom, LocalDate dateTo) {
         this.projectNames = projectNames;
@@ -25,8 +24,6 @@ public class Report3 {
         this.employeeName = employeeName;
         this.dateFrom = dateFrom;
         this.dateTo = dateTo;
-        this.keyword=keyword;
-
     }
 
     public String getEmployeeName() {
@@ -42,7 +39,7 @@ public class Report3 {
     }
 
     public String getKeyword() {
-        return keyword;
+        return null;
     }
 
     public String getTitle() {
