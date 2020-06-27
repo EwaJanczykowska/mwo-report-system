@@ -36,7 +36,7 @@ public class DataLoader {
 
             String fileName = file.getName();
             String personName = fileName.replace(".xls", "").replace("_", " ");
-            filterByEmployee = (filterByEmployee == null) ? filterByEmployee : filterByEmployee.replace("_", " ");
+            filterByEmployee = (filterByEmployee == null) ? filterByEmployee : filterByEmployee.replace("_", " ").toLowerCase();
 
             if (filterByEmployee != null && !personName.toLowerCase().contains(filterByEmployee)) {
                 continue;
