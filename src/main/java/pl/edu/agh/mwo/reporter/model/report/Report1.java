@@ -14,7 +14,6 @@ public class Report1 {
     private final String employeeName;
     private final LocalDate dateFrom;
     private final LocalDate dateTo;
-    private String keyword;
 
 
     public Report1(String employeeName, LocalDate dateFrom, LocalDate dateTo) {
@@ -22,11 +21,10 @@ public class Report1 {
         this.employeeName = employeeName;
         this.dateFrom = dateFrom;
         this.dateTo = dateTo;
-        this.keyword=keyword;
     }
 
     public String getKeyword() {
-        return keyword;
+        return null;
     }
 
     public String getTitle() {

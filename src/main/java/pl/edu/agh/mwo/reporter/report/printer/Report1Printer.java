@@ -1,10 +1,7 @@
 package pl.edu.agh.mwo.reporter.report.printer;
 
-import org.openxmlformats.schemas.spreadsheetml.x2006.main.STSourceType;
 import pl.edu.agh.mwo.reporter.model.Person;
 import pl.edu.agh.mwo.reporter.model.report.Report1;
-
-import java.sql.SQLOutput;
 
 public class Report1Printer implements IReportPrinter {
 
