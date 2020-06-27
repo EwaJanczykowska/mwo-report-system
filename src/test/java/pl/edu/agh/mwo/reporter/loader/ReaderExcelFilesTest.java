@@ -16,9 +16,9 @@ public class ReaderExcelFilesTest {
         List<Path> allFiles = readerExcelFiles.getAllFiles("resources/2012");
 
         Assert.assertEquals(3, allFiles.size());
-        Assert.assertEquals(Paths.get("resources/2012/01/Kowalski_Jan.xls"), allFiles.get(0));
-        Assert.assertEquals(Paths.get("resources/2012/01/Nowak_Piotr.xls"), allFiles.get(1));
-        Assert.assertEquals(Paths.get("resources/2012/02/Kowalski_Jan.xls"), allFiles.get(2));
+        Assert.assertTrue(allFiles.contains(Paths.get("resources/2012/01/Kowalski_Jan.xls")));
+        Assert.assertTrue(allFiles.contains(Paths.get("resources/2012/01/Nowak_Piotr.xls")));
+        Assert.assertTrue(allFiles.contains(Paths.get("resources/2012/02/Kowalski_Jan.xls")));
     }
 
 }
